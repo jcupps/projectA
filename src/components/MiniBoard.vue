@@ -18,9 +18,12 @@
 import { computed } from 'vue'
 import type { Board as BoardType } from '../data/mockBoards'
 import PinCard from './PinCard.vue'
-const props = defineProps<{ board: BoardType }>()
+const props = defineProps<{
+  board: BoardType,
+  clipTo?: number
+}>()
 
-const visiblePins = computed(() => props.board.pins.slice(0, 4))
+const visiblePins = computed(() => props.clipTo ? props.board.pins.slice(0, props.clipTo) : props.board.pins)
 const moreCount = computed(() => Math.max(0, props.board.pins.length - visiblePins.value.length))
 
 const maskStyle = computed(() => {
