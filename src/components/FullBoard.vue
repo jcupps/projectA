@@ -6,7 +6,7 @@
       class="fixed bottom-8 right-8 w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center text-2xl z-40"
       aria-label="Add new pin"
     >
-      ➕
+      +
     </button>
 
     <!-- New Pin Modal -->
@@ -80,7 +80,10 @@
       </div>
     </div>
 
-    <div class="p-6">
+    <div class="p-6"
+      @touchstart="handleTouchStart"
+      @touchend="handleTouchEnd"
+    >
       <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">{{ board.title }}</h2>
       <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">{{ board.description }}</p>
 
@@ -106,10 +109,17 @@
       </div>
 
       <div
-        class="flex flex-col gap-4"
+        class="flex flex-col divide-y-2 divide-slate-600"
         v-if="tab === 'pins'"
       >
-        <PinCard v-for="pin in board.pins" :key="pin.id" :pin="pin" />
+        <router-link
+          v-for="pin in board.pins"
+          :key="pin.id"
+          :to="{ name: 'PinDetail', params: { boardId: board.id, pinId: pin.id } }"
+          class="transition-transform hover:scale-102 block"
+        >
+          <PinCard :pin="pin" />
+        </router-link>
       </div>
       <div v-else-if="tab === 'members'" class="space-y-4">
         <div v-if="!board.sharedWith || board.sharedWith.length === 0" class="text-center py-8">
@@ -197,6 +207,37 @@ const newPin = ref({
   image: '',
   author: ''
 })
+
+// Touch handling for swipe navigation
+const touchStartX = ref(0)
+const touchStartY = ref(0)
+
+const handleTouchStart = (e: TouchEvent) => {
+  touchStartX.value = e.touches[0].clientX
+  touchStartY.value = e.touches[0].clientY
+}
+
+const handleTouchEnd = (e: TouchEvent) => {
+  const touchEndX = e.changedTouches[0].clientX
+  const touchEndY = e.changedTouches[0].clientY
+  
+  const deltaX = touchStartX.value - touchEndX
+  const deltaY = Math.abs(touchStartY.value - touchEndY)
+  
+  // Only detect horizontal swipes (ignore vertical scrolling)
+  if (Math.abs(deltaX) > 50 && deltaY < 100) {
+    const tabs: Tab[] = ['pins', 'members', 'comments']
+    const currentIndex = tabs.indexOf(tab.value)
+    
+    if (deltaX > 0 && currentIndex < tabs.length - 1) {
+      // Swiped left, move to next tab
+      tab.value = tabs[currentIndex + 1]
+    } else if (deltaX < 0 && currentIndex > 0) {
+      // Swiped right, move to previous tab
+      tab.value = tabs[currentIndex - 1]
+    }
+  }
+}
 
 const sortedComments = computed(() => {
   return [...props.board.comments].sort((a, b) => 
