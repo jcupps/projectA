@@ -20,12 +20,13 @@ const makeImage = (seed: string, w = 800, h = 600) =>
   `https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${h}`
 
 let idCounter = 1
-const makePin = (title: string, author: string) => {
+const makePin = (title: string, author: string, description: string) => {
   const pin: Pin = {
     id: idCounter++,
     title,
     image: makeImage(title),
     author,
+    description,
     likes: Math.floor(Math.random() * 900) + 20
   }
   return pin
@@ -40,6 +41,15 @@ const indianTitles = [
   'Aloo Gobi'
 ]
 
+const indianDescriptions = [
+  'Rich and creamy tomato-based curry with tender chicken pieces, perfect with naan or rice.',
+  'Crispy lentil crepe with potato and onion filling, served with coconut and chutney.',
+  'Creamed spinach with fresh cottage cheese cubes, a classic vegetarian delight.',
+  'Deep-fried bread served with spiced chickpea curry, a popular street food favorite.',
+  'Fragrant rice cooked with meat and spices, a royal dish with layers of flavor.',
+  'Simple and delicious stir-fried potatoes with cauliflower and aromatic spices.'
+]
+
 const dessertTitles = [
   'Chocolate Lava Cake',
   'Gulab Jamun',
@@ -47,6 +57,15 @@ const dessertTitles = [
   'Tiramisu',
   'Mango Kulfi',
   'Pistachio Baklava'
+]
+
+const dessertDescriptions = [
+  'Decadent warm chocolate cake with a molten center, perfect for chocolate lovers.',
+  'Sweet milk solids dumplings soaked in rose-flavored sugar syrup, an Indian classic.',
+  'Creamy cheesecake with tart raspberry layer, a modern dessert favorite.',
+  'Italian no-bake dessert with layers of mascarpone cream and espresso-soaked ladyfingers.',
+  'Frozen Indian ice cream with mango pulp and traditional flavors, served as bars.',
+  'Crispy phyllo pastry layered with pistachios and honey, a Middle Eastern treat.'
 ]
 
 const classicalReading = [
@@ -58,6 +77,15 @@ const classicalReading = [
   'Jane Eyre — Charlotte Brontë'
 ]
 
+const classicalDescriptions = [
+  'A witty romantic novel exploring love, class, and personal growth in Georgian England.',
+  'Philosophical meditations on virtue, resilience, and living a meaningful life.',
+  'An epic journey of Odysseus trying to return home after the Trojan War, timeless adventure.',
+  'A psychological thriller about guilt and redemption in 19th century Russia.',
+  'A poetic journey through Hell, Purgatory, and Paradise, exploring divine justice.',
+  'A gothic romance following an orphan girl\'s struggles and triumph against adversity.'
+]
+
 const fantasyList = [
   'The Name of the Wind — Patrick Rothfuss',
   'The Hobbit — J.R.R. Tolkien',
@@ -65,6 +93,15 @@ const fantasyList = [
   'A Wizard of Earthsea — Ursula K. Le Guin',
   'The Blade Itself — Joe Abercrombie',
   'Mistborn — Brandon Sanderson'
+]
+
+const fantasyDescriptions = [
+  'The origin story of Kvothe, a legendary figure, told through his own captivating recollections.',
+  'A short but adventure-filled journey of Bilbo Baggins discovering courage and treasure.',
+  'A witty con-artist tale with intricate plotting and unforgettable characters in a fantasy Venice.',
+  'A coming-of-age wizard story about balance between magic and responsibility, beautifully written.',
+  'A gritty, character-driven epic with morally complex protagonists and brutal battles.',
+  'An intricate fantasy world with unique magic systems and multiple interconnected narratives.'
 ]
 
 const workouts = [
@@ -76,6 +113,15 @@ const workouts = [
   'Leg Day Circuit (40 mins)'
 ]
 
+const workoutDescriptions = [
+  'High-intensity interval training combining cardio and strength for maximum efficiency.',
+  'Focused strength work for chest, back, shoulders, and arms with progressive overload.',
+  'Mindful flowing sequences building flexibility, balance, and inner calm.',
+  'Targeted core exercises to build strength in abs, obliques, and lower back.',
+  'Speed and endurance building through short, intense running intervals with rest periods.',
+  'Comprehensive leg workout targeting quads, hamstrings, glutes, and calves.'
+]
+
 const decor = [
   'Boho Living Room Setup',
   'Minimalist Bedroom Ideas',
@@ -85,8 +131,17 @@ const decor = [
   'Small Balcony Makeover'
 ]
 
-const makePinsFromTitles = (titles: string[], authorBase: string) =>
-  titles.map((t) => makePin(t, `${authorBase}`))
+const decorDescriptions = [
+  'Create a warm, eclectic space with layered textures, natural materials, and global-inspired decor.',
+  'Design a calm, clutter-free bedroom with neutral colors and essential furniture pieces.',
+  'Build the perfect cozy corner with comfortable seating, good lighting, and personal touches.',
+  'Elevate your space with greenery, combining pots, stands, and hanging planters artfully.',
+  'Create visual interest with a curated collection of art, photos, and prints on your walls.',
+  'Transform a small outdoor space into a functional and beautiful retreat with smart furnishing.'
+]
+
+const makePinsFromTitles = (titles: string[], descriptions: string[], authorBase: string) =>
+  titles.map((t, i) => makePin(t, `${authorBase}`, descriptions[i]))
 
 const mockComments: { [key: number]: Comment[] } = {
   1: [
@@ -126,42 +181,42 @@ export const mockBoards: Board[] = [
     id: 1,
     title: 'Indian Recipes',
     description: 'Popular and traditional Indian dishes to try at home',
-    pins: makePinsFromTitles(indianTitles, 'Chef Arjun'),
+    pins: makePinsFromTitles(indianTitles, indianDescriptions, 'Chef Arjun'),
     comments: mockComments[1] || []
   },
   {
     id: 2,
     title: 'Dessert Recipes',
     description: 'Sweet treats and dessert recipes from around the world',
-    pins: makePinsFromTitles(dessertTitles, 'Baker Mila'),
+    pins: makePinsFromTitles(dessertTitles, dessertDescriptions, 'Baker Mila'),
     comments: mockComments[2] || []
   },
   {
     id: 3,
     title: 'Book Club Reading List',
     description: 'Essential classical works to read and re-read',
-    pins: makePinsFromTitles(classicalReading, 'Literary Curator'),
+    pins: makePinsFromTitles(classicalReading, classicalDescriptions, 'Literary Curator'),
     comments: mockComments[3] || []
   },
   {
     id: 4,
     title: 'Fantasy Ready List',
     description: 'Epic and modern fantasy picks for long reading sessions',
-    pins: makePinsFromTitles(fantasyList, 'Fantasy Guild'),
+    pins: makePinsFromTitles(fantasyList, fantasyDescriptions, 'Fantasy Guild'),
     comments: mockComments[4] || []
   },
   {
     id: 5,
     title: 'Workout Routines',
     description: 'Short and effective routines to build strength and stamina',
-    pins: makePinsFromTitles(workouts, 'Coach Riley'),
+    pins: makePinsFromTitles(workouts, workoutDescriptions, 'Coach Riley'),
     comments: mockComments[5] || []
   },
   {
     id: 6,
     title: 'Decor Inspirations',
     description: 'Styling ideas for home decor and small spaces',
-    pins: makePinsFromTitles(decor, 'Home Stylist'),
+    pins: makePinsFromTitles(decor, decorDescriptions, 'Home Stylist'),
     comments: mockComments[6] || []
   }
 ]

@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-white dark:bg-slate-800">
     <!-- Header with Back Button -->
     <div class="sticky top-0 z-40 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shadow-sm">
-      <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="p-6 flex items-center justify-between">
         <router-link
           :to="{ name: 'BoardDetail', params: { id: boardId } }"
           class="flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
@@ -17,20 +17,10 @@
     </div>
 
     <!-- Main Content -->
-    <div v-if="pin" class="max-w-4xl mx-auto px-4 py-8">
+    <div v-if="pin" class="p-6">
       <div class="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-lg">
-        <!-- Image Section -->
-        <div class="relative h-96 md:h-[500px] bg-slate-900 overflow-hidden">
-          <img
-            :src="pin.image"
-            :alt="pin.title"
-            class="w-full h-full object-cover"
-            :style="{ 'view-transition-name': `pin-img-${pin.id}` }"
-          />
-        </div>
-
         <!-- Content Section -->
-        <div class="p-8">
+        <div>
           <!-- Title -->
           <h1 class="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4"
             :style="{ 'view-transition-name': `pin-title-${pin.id}` }"
@@ -38,66 +28,61 @@
             {{ pin.title }}
           </h1>
 
-          <!-- Author and Likes -->
-          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8 pb-8 border-b border-slate-200 dark:border-slate-700">
-            <div class="flex items-center gap-4">
-              <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-2xl font-semibold">
-                {{ pin.author.charAt(0) }}
-              </div>
-              <div>
-                <div class="font-semibold text-lg text-slate-900 dark:text-slate-100">{{ pin.author }}</div>
-                <div class="text-sm text-slate-500 dark:text-slate-400">Creator</div>
-              </div>
+          <!-- Author -->
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xl font-semibold">
+              {{ pin.author.charAt(0) }}
             </div>
-            <div class="text-center">
-              <div class="text-4xl mb-2">❤</div>
-              <div class="text-2xl font-bold text-slate-900 dark:text-slate-100">{{ pin.likes }}</div>
-              <div class="text-sm text-slate-500 dark:text-slate-400">Likes</div>
+            <div>
+              <div class="font-semibold text-lg text-slate-700 dark:text-slate-300">{{ pin.author }}</div>
             </div>
           </div>
 
-          <!-- Action Buttons -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-            <button
-              @click="handleLike"
-              class="bg-red-500 hover:bg-red-600 text-white font-semibold py-4 px-6 rounded-md transition-colors flex items-center justify-center gap-2 text-lg"
-            >
-              <span class="text-2xl">❤</span>
-              Like
-            </button>
-            <button
-              class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-md transition-colors flex items-center justify-center gap-2 text-lg"
-            >
-              <span class="text-2xl">📌</span>
-              Save
-            </button>
-            <button
-              class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-900 dark:text-slate-100 font-semibold py-4 px-6 rounded-md transition-colors flex items-center justify-center gap-2 text-lg"
-            >
-              <span class="text-2xl">📤</span>
-              Share
-            </button>
-          </div>
-
-          <!-- Description Section -->
-          <div class="mb-8 pb-8 border-b border-slate-200 dark:border-slate-700">
-            <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">About this pin</h3>
+          <!-- Description Section (text content first) -->
+          <div class="mb-6">
             <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
-              This beautiful image by {{ pin.author }} has received {{ pin.likes }} likes from our community. 
+              This beautiful image by {{ pin.author }} has received {{ pin.likes }} likes from our community.
               Discover more amazing content from this creator and share your thoughts with others.
             </p>
           </div>
 
-          <!-- Related Info -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
-            <div class="p-6 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600">
-              <div class="text-sm text-slate-500 dark:text-slate-400 mb-2">Pin ID</div>
-              <div class="text-2xl font-bold text-slate-900 dark:text-slate-100">#{{ pin.id }}</div>
-            </div>
-            <div class="p-6 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600">
-              <div class="text-sm text-slate-500 dark:text-slate-400 mb-2">Views</div>
-              <div class="text-2xl font-bold text-slate-900 dark:text-slate-100">{{ (pin.likes * 3) + Math.floor(Math.random() * 100) }}</div>
-            </div>
+          <!-- Image (show after text if present) -->
+          <div v-if="pin.image" class="relative h-96 md:h-[500px] bg-slate-900 overflow-hidden mb-8">
+            <img
+              :src="pin.image"
+              :alt="pin.title"
+              class="w-full h-full object-cover"
+              :style="{ 'view-transition-name': `pin-img-${pin.id}` }"
+            />
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex gap-8 mb-6 text-slate-500 dark:text-slate-400">
+            <button
+              @click="handleLike"
+              class="flex items-center gap-2 group hover:text-red-500 transition-colors"
+            >
+              <span class="w-9 h-9 rounded-full group-hover:bg-red-500/10 flex items-center justify-center text-lg transition-colors">
+                <font-awesome-icon icon="fa-regular fa-heart" />
+              </span>
+              <span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-red-500">{{ pin.likes }}</span>
+            </button>
+            <button
+              class="flex items-center gap-2 group hover:text-blue-500 transition-colors"
+            >
+              <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">
+                <font-awesome-icon icon="fa-regular fa-bookmark" />
+              </span>
+              <span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-blue-500">Save</span>
+            </button>
+            <button
+              class="flex items-center gap-2 group hover:text-blue-500 transition-colors"
+            >
+              <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">
+                <font-awesome-icon icon="fa-solid fa-share-nodes" />
+              </span>
+              <span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-blue-500">Share</span>
+            </button>
           </div>
 
           <!-- Comments Section -->

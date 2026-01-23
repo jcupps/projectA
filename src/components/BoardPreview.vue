@@ -4,7 +4,7 @@
       <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">{{ board.title }}</h2>
       <p class="text-sm text-slate-500 dark:text-slate-300 mb-3">{{ board.description }}</p>
 
-      <div class="flex flex-col gap-3" :style="maskStyle">
+      <div class="flex flex-col gap-1" :style="maskStyle">
         <PinCard v-for="pin in visiblePins" :key="pin.id" :pin="pin" />
       </div>
       <div v-if="moreCount > 0" class="relative z-20 mt-1 text-center text-sm text-slate-600 dark:text-slate-300">
@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Board as BoardType } from '../data/mockBoards'
-import PinCard from './PinCard.vue'
+import PinCard from './PinPreview.vue'
 const props = defineProps<{
   board: BoardType,
   clipTo?: number

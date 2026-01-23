@@ -1,4 +1,11 @@
 import { createApp } from 'vue'
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core'
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+/* import icons and add them to the Library */
+import { faBookmark, faComment, faHeart } from '@fortawesome/free-regular-svg-icons'
+import { faChevronDown, faShareNodes } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import './styles/tailwind.css'
 import router from './router'
@@ -19,9 +26,12 @@ try {
 // register service worker helper provided by vite-plugin-pwa
 import { registerSW } from 'virtual:pwa-register'
 
-const app = createApp(App)
-app.use(router)
-app.mount('#app')
+library.add(faBookmark, faChevronDown, faComment, faHeart, faShareNodes)
+
+createApp(App)
+  .use(router)
+  .component('font-awesome-icon', FontAwesomeIcon)
+  .mount('#app')
 
 const updateSW = registerSW({
   onNeedRefresh() {

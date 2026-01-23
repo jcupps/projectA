@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import Board from '../components/MiniBoard.vue'
+import Board from '../components/BoardPreview.vue'
 import { mockBoards } from '../data/mockBoards'
 
 const router = useRouter();

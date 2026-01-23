@@ -1,5 +1,5 @@
 <template>
-  <section class="relative bg-white dark:bg-slate-800 rounded-lg shadow-sm overflow-hidden">
+  <section class="relative rounded-lg shadow-sm overflow-hidden">
     <!-- Floating Action Button -->
     <button
       @click="showNewPinForm = true"
@@ -80,9 +80,8 @@
       </div>
     </div>
 
-    <div class="p-6"
-      @touchstart="handleTouchStart"
-      @touchend="handleTouchEnd"
+    <div
+      ref="swipeTarget"
     >
       <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">{{ board.title }}</h2>
       <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">{{ board.description }}</p>
@@ -109,7 +108,12 @@
       </div>
 
       <div
-        class="flex flex-col divide-y-2 divide-slate-600"
+        class="flex flex-col gap-1 transition-all duration-300 transform"
+        :class="{
+          'opacity-0 translate-x-full': slideDirection === 'left',
+          'opacity-0 -translate-x-full': slideDirection === 'right',
+          'opacity-100 translate-x-0': slideDirection === 'none'
+        }"
         v-if="tab === 'pins'"
       >
         <router-link
@@ -121,7 +125,15 @@
           <PinCard :pin="pin" />
         </router-link>
       </div>
-      <div v-else-if="tab === 'members'" class="space-y-4">
+      <div 
+        v-else-if="tab === 'members'" 
+        class="space-y-4 transition-all duration-300 transform"
+        :class="{
+          'opacity-0 translate-x-full': slideDirection === 'left',
+          'opacity-0 -translate-x-full': slideDirection === 'right',
+          'opacity-100 translate-x-0': slideDirection === 'none'
+        }"
+      >
         <div v-if="!board.sharedWith || board.sharedWith.length === 0" class="text-center py-8">
           <p class="text-slate-500 dark:text-slate-400">This board is private. No members have been added yet.</p>
         </div>
@@ -141,7 +153,15 @@
           Share this board with others
         </button>
       </div>
-      <div v-else-if="tab === 'comments'" class="space-y-5">
+      <div 
+        v-else-if="tab === 'comments'" 
+        class="space-y-5 transition-all duration-300 transform"
+        :class="{
+          'opacity-0 translate-x-full': slideDirection === 'left',
+          'opacity-0 -translate-x-full': slideDirection === 'right',
+          'opacity-100 translate-x-0': slideDirection === 'none'
+        }"
+      >
         <div class="bg-slate-100 dark:bg-slate-700 rounded-lg p-4">
           <h3 class="font-semibold text-slate-800 dark:text-slate-100 mb-3 text-sm">Add a Comment</h3>
           <textarea 
@@ -190,54 +210,58 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useSwipe } from '@vueuse/core'
 import type { Board as BoardType, Comment } from '../data/mockBoards'
 import type { Pin } from '../data/mockPins'
-import PinCard from './PinCard.vue'
+import PinCard from './PinPreview.vue'
 const props = defineProps<{
   board: BoardType
 }>()
 
 type Tab = 'pins' | 'members' | 'comments';
+type SlideDirection = 'left' | 'right' | 'none';
 
 const tab = ref<Tab>('pins')
 const newComment = ref('')
 const showNewPinForm = ref(false)
+const slideDirection = ref<SlideDirection>('none')
+const swipeTarget = ref<HTMLElement>()
 const newPin = ref({
   title: '',
   image: '',
   author: ''
 })
 
-// Touch handling for swipe navigation
-const touchStartX = ref(0)
-const touchStartY = ref(0)
-
-const handleTouchStart = (e: TouchEvent) => {
-  touchStartX.value = e.touches[0].clientX
-  touchStartY.value = e.touches[0].clientY
-}
-
-const handleTouchEnd = (e: TouchEvent) => {
-  const touchEndX = e.changedTouches[0].clientX
-  const touchEndY = e.changedTouches[0].clientY
-  
-  const deltaX = touchStartX.value - touchEndX
-  const deltaY = Math.abs(touchStartY.value - touchEndY)
-  
-  // Only detect horizontal swipes (ignore vertical scrolling)
-  if (Math.abs(deltaX) > 50 && deltaY < 100) {
-    const tabs: Tab[] = ['pins', 'members', 'comments']
-    const currentIndex = tabs.indexOf(tab.value)
-    
-    if (deltaX > 0 && currentIndex < tabs.length - 1) {
+// Swipe handling with VueUse composable
+const { isSwiping, direction } = useSwipe(swipeTarget, {
+  onSwipe() {
+    if (direction.value === 'left') {
       // Swiped left, move to next tab
-      tab.value = tabs[currentIndex + 1]
-    } else if (deltaX < 0 && currentIndex > 0) {
+      const tabs: Tab[] = ['pins', 'members', 'comments']
+      const currentIndex = tabs.indexOf(tab.value)
+      
+      if (currentIndex < tabs.length - 1) {
+        slideDirection.value = 'left'
+        setTimeout(() => {
+          tab.value = tabs[currentIndex + 1]
+          slideDirection.value = 'none'
+        }, 150)
+      }
+    } else if (direction.value === 'right') {
       // Swiped right, move to previous tab
-      tab.value = tabs[currentIndex - 1]
+      const tabs: Tab[] = ['pins', 'members', 'comments']
+      const currentIndex = tabs.indexOf(tab.value)
+      
+      if (currentIndex > 0) {
+        slideDirection.value = 'right'
+        setTimeout(() => {
+          tab.value = tabs[currentIndex - 1]
+          slideDirection.value = 'none'
+        }, 150)
+      }
     }
   }
-}
+})
 
 const sortedComments = computed(() => {
   return [...props.board.comments].sort((a, b) => 
