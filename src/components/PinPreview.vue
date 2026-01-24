@@ -28,16 +28,18 @@
           class="h-full object-cover rounded"
           :style="{ 'view-transition-name': `pin-img-${pin.id}` }"
         />
-        <div class="flex-col gap-1 text-xs text-slate-500 dark:text-slate-300 flex items-start justify-between w-12">
-          <span class=" text-red-400"><font-awesome-icon icon="fa-regular fa-heart" /> {{ pin.likes }}</span>
-          <span><font-awesome-icon icon="fa-regular fa-comment" /> {{ pin.comments?.length ?? 0 }}</span>
+        <div class="flex gap-2">
+          <div class="flex-col gap-1 text-xs text-slate-500 dark:text-slate-300 flex items-start justify-between w-12">
+            <span class=" text-red-400"><font-awesome-icon icon="fa-regular fa-heart" /> {{ pin.likes }}</span>
+            <span><font-awesome-icon icon="fa-regular fa-comment" /> {{ pin.comments?.length ?? 0 }}</span>
+          </div>
+          <button
+            class="w-6 h-6 rounded-full bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+            @click.stop.prevent="expand"
+          >
+            <font-awesome-icon icon="fa-solid fa-chevron-down" class="text-slate-600 dark:text-slate-300 text-xs" />
+          </button>
         </div>
-        <button
-          class="w-6 h-6 rounded-full bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
-          @click.stop.prevent="expand"
-        >
-          <font-awesome-icon icon="fa-solid fa-chevron-down" class="text-slate-600 dark:text-slate-300 text-xs" />
-        </button>
       </div>
     </div>
   </article>
@@ -50,13 +52,13 @@
       :aria-label="pin.title"
     >
       <div class="relative flex flex-col gap-4 px-5 py-4">
-        <div class="flex flex-1 gap-3 min-w-0">
+        <div class="flex flex-1 gap-3 min-w-0 justify-between">
           <div class="flex flex-col gap-1">
-            <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100 truncate"
+            <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100"
               :style="{ 'view-transition-name': `pin-title-${pin.id}` }"
             >{{ pin.title }}</h3>
             <div class="text-sm text-slate-500 dark:text-slate-300 flex items-center justify-between">
-              <span class="truncate">{{ pin.description }}</span>
+              <span>{{ pin.description }}</span>
             </div>
           </div>
           <button

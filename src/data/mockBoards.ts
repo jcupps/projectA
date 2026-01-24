@@ -140,6 +140,60 @@ const decorDescriptions = [
   'Transform a small outdoor space into a functional and beautiful retreat with smart furnishing.'
 ]
 
+const houseNames = [
+  '245 Oak Ridge Dr.',
+  '1847 Maple Ave.',
+  '512 Coastal Highway Ln.',
+  '3925 Mountain View Rd.',
+  '621 Historic District St.',
+  '784 Innovation Park Way'
+]
+
+const houseDescriptions = [
+  'Urban living with exposed brick, high ceilings, and open floor plan. Perfect for young professionals.',
+  'Spacious family home with 4 bedrooms, good schools nearby, and a beautiful backyard.',
+  'Stunning ocean views with private beach access, modern amenities, and elegant architecture.',
+  'Cozy mountain escape with stone fireplace, deck overlooking forest, and peaceful setting.',
+  'Charming 1920s building in trendy neighborhood with original details and rooftop terrace.',
+  'Smart home automation, solar panels, energy efficient, with cutting-edge kitchen and tech integration.'
+]
+
+const weddingGifts = [
+  'Luxury Bedding Set',
+  'Premium Cookware',
+  'Wine Decanter Set',
+  'Espresso Machine',
+  'Silk Throw Pillows',
+  'Crystal Vase Collection'
+]
+
+const weddingDescriptions = [
+  'Egyptian cotton sheets and duvet cover in champagne, perfect for a luxurious bedroom.',
+  'Professional-grade stainless steel pots and pans, ideal for couples who love cooking together.',
+  'Hand-blown crystal decanter with accompanying wine glasses for entertaining guests.',
+  'Automatic espresso machine with grinder, perfect for morning coffee rituals at home.',
+  'Set of 4 silk throw pillows in neutral tones to enhance living room comfort and style.',
+  'Set of 3 hand-crafted crystal vases of varying heights for flower arrangements.'
+]
+
+const travelDestinations = [
+  'Kyoto, Japan',
+  'Amalfi Coast, Italy',
+  'Machu Picchu, Peru',
+  'Norwegian Fjords',
+  'Bali, Indonesia',
+  'Iceland - Ring Road'
+]
+
+const travelDescriptions = [
+  'Ancient temples, traditional gardens, and geisha culture. Experience traditional Japan at its finest.',
+  'Colorful cliff villages, stunning coastal views, and incredible local cuisine along dramatic coastline.',
+  'Iconic Incan citadel perched high in the Andes mountains with breathtaking archaeological wonders.',
+  'Dramatic steep-sided valleys with waterfalls, glaciers, and unforgettable natural landscapes.',
+  'Tropical paradise with white sand beaches, rice terraces, temples, and vibrant culture.',
+  'Epic driving adventure through Iceland visiting glaciers, waterfalls, geysers, and black sand beaches.'
+]
+
 const makePinsFromTitles = (titles: string[], descriptions: string[], authorBase: string) =>
   titles.map((t, i) => makePin(t, `${authorBase}`, descriptions[i]))
 
@@ -173,6 +227,21 @@ const mockComments: { [key: number]: Comment[] } = {
     { id: 16, author: 'Nina Petrov', content: 'The boho living room setup is exactly what I need! Love the colors.', createdAt: new Date('2024-12-27') },
     { id: 17, author: 'Oscar Green', content: 'That cozy reading nook is calling my name. Time to reorganize!', createdAt: new Date('2024-12-26') },
     { id: 18, author: 'Victoria Hayes', content: 'Indoor plant styling tips are gold. My apartment looks like a jungle now!', createdAt: new Date('2024-12-25') }
+  ],
+  7: [
+    { id: 19, author: 'Michael Torres', content: 'The beachfront villa is absolutely stunning! Adding to my dream list.', createdAt: new Date('2024-12-27') },
+    { id: 20, author: 'Sarah Kim', content: 'That suburban home seems perfect for starting a family!', createdAt: new Date('2024-12-26') },
+    { id: 21, author: 'James Wilson', content: 'The mountain cabin is calling me. Need a getaway!', createdAt: new Date('2024-12-25') }
+  ],
+  8: [
+    { id: 22, author: 'Emma Davis', content: 'That espresso machine would be the perfect addition to our kitchen!', createdAt: new Date('2024-12-27') },
+    { id: 23, author: 'Lucas Anderson', content: 'The luxury bedding set looks incredibly comfortable. Added to wishlist!', createdAt: new Date('2024-12-26') },
+    { id: 24, author: 'Olivia Brown', content: 'Love the crystal vase collection - so elegant and timeless!', createdAt: new Date('2024-12-25') }
+  ],
+  9: [
+    { id: 25, author: 'Sofia Martinez', content: 'Machu Picchu has been on my bucket list forever! Need to book this!', createdAt: new Date('2024-12-27') },
+    { id: 26, author: 'Noah Johnson', content: 'The Amalfi Coast is so picturesque. Those cliffs are insane!', createdAt: new Date('2024-12-26') },
+    { id: 27, author: 'Ava Thompson', content: 'Iceland road trip would be an absolute adventure. Saving this for next year!', createdAt: new Date('2024-12-25') }
   ]
 }
 
@@ -218,6 +287,27 @@ export const mockBoards: Board[] = [
     description: 'Styling ideas for home decor and small spaces',
     pins: makePinsFromTitles(decor, decorDescriptions, 'Home Stylist'),
     comments: mockComments[6] || []
+  },
+  {
+    id: 7,
+    title: 'House Search List',
+    description: 'Dream homes and properties to consider for relocation',
+    pins: makePinsFromTitles(houseNames, houseDescriptions, 'Real Estate Scout'),
+    comments: mockComments[7] || []
+  },
+  {
+    id: 8,
+    title: 'Wedding Gift Registry',
+    description: 'Curated collection of gifts for the perfect home setup',
+    pins: makePinsFromTitles(weddingGifts, weddingDescriptions, 'Wedding Planner'),
+    comments: mockComments[8] || []
+  },
+  {
+    id: 9,
+    title: 'Travel Bucket List',
+    description: 'Dream destinations and must-visit places around the world',
+    pins: makePinsFromTitles(travelDestinations, travelDescriptions, 'Travel Enthusiast'),
+    comments: mockComments[9] || []
   }
 ]
 
