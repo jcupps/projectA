@@ -10,9 +10,6 @@
           <span class="text-2xl">←</span>
           Back to Board
         </router-link>
-        <div class="text-sm text-slate-500 dark:text-slate-400">
-          Pin #{{ pin?.id }}
-        </div>
       </div>
     </div>
 

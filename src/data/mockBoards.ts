@@ -12,6 +12,7 @@ export interface Board {
   title: string
   description?: string
   pins: Pin[],
+  likes: number,
   comments: Comment[],
   sharedWith?: string[]
 }
@@ -20,11 +21,11 @@ const makeImage = (seed: string, w = 800, h = 600) =>
   `https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${h}`
 
 let idCounter = 1
-const makePin = (title: string, author: string, description: string) => {
+const makePin = (title: string, author: string, description: string, hasImage?: boolean) => {
   const pin: Pin = {
     id: idCounter++,
     title,
-    image: makeImage(title),
+    image: hasImage ? makeImage(title) : undefined,
     author,
     description,
     likes: Math.floor(Math.random() * 900) + 20
@@ -195,7 +196,7 @@ const travelDescriptions = [
 ]
 
 const makePinsFromTitles = (titles: string[], descriptions: string[], authorBase: string) =>
-  titles.map((t, i) => makePin(t, `${authorBase}`, descriptions[i]))
+  titles.map((t, i) => makePin(t, `${authorBase}`, descriptions[i], Math.random() > 0.3))
 
 const mockComments: { [key: number]: Comment[] } = {
   1: [
@@ -251,63 +252,72 @@ export const mockBoards: Board[] = [
     title: 'Indian Recipes',
     description: 'Popular and traditional Indian dishes to try at home',
     pins: makePinsFromTitles(indianTitles, indianDescriptions, 'Chef Arjun'),
-    comments: mockComments[1] || []
+    comments: mockComments[1] || [],
+    likes: 124
   },
   {
     id: 2,
     title: 'Dessert Recipes',
     description: 'Sweet treats and dessert recipes from around the world',
     pins: makePinsFromTitles(dessertTitles, dessertDescriptions, 'Baker Mila'),
-    comments: mockComments[2] || []
+    comments: mockComments[2] || [],
+    likes: 98
   },
   {
     id: 3,
     title: 'Book Club Reading List',
     description: 'Essential classical works to read and re-read',
     pins: makePinsFromTitles(classicalReading, classicalDescriptions, 'Literary Curator'),
-    comments: mockComments[3] || []
+    comments: mockComments[3] || [],
+    likes: 76
   },
   {
     id: 4,
-    title: 'Fantasy Ready List',
+    title: 'Fantasy Reading List',
     description: 'Epic and modern fantasy picks for long reading sessions',
     pins: makePinsFromTitles(fantasyList, fantasyDescriptions, 'Fantasy Guild'),
-    comments: mockComments[4] || []
+    comments: mockComments[4] || [],
+    likes: 89
   },
   {
     id: 5,
     title: 'Workout Routines',
     description: 'Short and effective routines to build strength and stamina',
     pins: makePinsFromTitles(workouts, workoutDescriptions, 'Coach Riley'),
-    comments: mockComments[5] || []
+    comments: mockComments[5] || [],
+    likes: 143
   },
   {
     id: 6,
     title: 'Decor Inspirations',
     description: 'Styling ideas for home decor and small spaces',
     pins: makePinsFromTitles(decor, decorDescriptions, 'Home Stylist'),
-    comments: mockComments[6] || []
+    comments: mockComments[6] || [],
+    likes: 110
   },
   {
     id: 7,
     title: 'House Search List',
     description: 'Dream homes and properties to consider for relocation',
     pins: makePinsFromTitles(houseNames, houseDescriptions, 'Real Estate Scout'),
-    comments: mockComments[7] || []
+    comments: mockComments[7] || [],
+    likes: 95
   },
   {
     id: 8,
     title: 'Wedding Gift Registry',
     description: 'Curated collection of gifts for the perfect home setup',
     pins: makePinsFromTitles(weddingGifts, weddingDescriptions, 'Wedding Planner'),
-    comments: mockComments[8] || []
+    comments: mockComments[8] || [],
+    likes: 130
   },
   {
     id: 9,
     title: 'Travel Bucket List',
     description: 'Dream destinations and must-visit places around the world',
     pins: makePinsFromTitles(travelDestinations, travelDescriptions, 'Travel Enthusiast'),
-    comments: mockComments[9] || []
+    comments: mockComments[9] || [],
+    likes: 150
   }
 ]
 

@@ -1,11 +1,35 @@
 <template>
   <section class="relative bg-white dark:bg-slate-800 rounded-lg shadow-sm overflow-hidden">
     <div class="p-4">
-      <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">{{ board.title }}</h2>
-      <p class="text-sm text-slate-500 dark:text-slate-300 mb-3">{{ board.description }}</p>
+      <div class="flex gap-4 items-baseline justify-between">
+        <div>
+          <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">{{ board.title }}</h2>
+          <p class="text-sm text-slate-500 dark:text-slate-300 mb-3">{{ board.description }}</p>
+        </div>
+        <div class="flex-col gap-1 text-xs text-slate-500 dark:text-slate-300 flex items-start justify-between w-14">
+          <span class=" text-red-400"><font-awesome-icon icon="fa-regular fa-heart" /> {{ board.likes }}</span>
+          <span><font-awesome-icon icon="fa-regular fa-comment" /> {{ board.comments?.length ?? 0 }}</span>
+        </div>
+      </div>
 
-      <div class="flex flex-col gap-1" :style="maskStyle">
-        <PinCard v-for="pin in visiblePins" :key="pin.id" :pin="pin" />
+      <div
+        class="flex flex-col gap-0.5 text-slate-800 dark:text-slate-100"
+        :style="maskStyle"
+      >
+        <!-- <PinCard v-for="pin in visiblePins" :key="pin.id" :pin="pin" /> -->
+         <div
+          v-for="pin in visiblePins"
+          :key="pin.id"
+          class="flex gap-3 justify-between items-center bg-slate-700/50 h-10 px-2 py-1 border border-slate-200 dark:border-slate-700 rounded"
+        >
+          <div class="text-sm truncate">{{ pin.title }}</div>
+          <img
+            v-if="pin.image"
+            :src="pin.image"
+            :alt="pin.title"
+            class="h-full object-cover rounded"
+          />
+        </div>
       </div>
       <div v-if="moreCount > 0" class="relative z-20 mt-1 text-center text-sm text-slate-600 dark:text-slate-300">
         +{{ moreCount }} more

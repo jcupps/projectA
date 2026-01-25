@@ -83,10 +83,52 @@
     <div
       ref="swipeTarget"
     >
-      <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">{{ board.title }}</h2>
-      <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">{{ board.description }}</p>
+      <div class="flex gap-4 items-baseline justify-between">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">{{ board.title }}</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">{{ board.description }}</p>
+        </div>
+        <button>
+          <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class="text-slate-600 dark:text-slate-300 text-lg" />
+        </button>
+      </div>
 
-      <div class="flex text-white items-center divide-x-2 divide-slate-600 mb-6 bg-slate-900 rounded-md overflow-hidden">
+      <div class="flex gap-8 mb-6 text-slate-500 dark:text-slate-400">
+        <button
+          @click="() => {}"
+          class="flex items-center gap-2 group hover:text-red-500 transition-colors"
+        >
+          <span class="w-9 h-9 rounded-full group-hover:bg-red-500/10 flex items-center justify-center text-lg transition-colors">
+            <font-awesome-icon icon="fa-regular fa-heart" />
+          </span>
+          <span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-red-500">{{ board.likes }}</span>
+        </button>
+        <button
+          @click="() => {}"
+          class="flex items-center gap-2 group hover:text-blue-500 transition-colors"
+        >
+          <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">
+            <font-awesome-icon icon="fa-regular fa-comment" />
+          </span>
+          <span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-blue-500">{{ board.comments?.length ?? 0 }}</span>
+        </button>
+        <button
+          class="flex items-center gap-2 group hover:text-blue-500 transition-colors"
+        >
+          <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">
+            <font-awesome-icon icon="fa-regular fa-bookmark" />
+          </span>
+        </button>
+        <button
+          class="flex items-center gap-2 group hover:text-blue-500 transition-colors"
+        >
+          <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">
+            <font-awesome-icon icon="fa-solid fa-share-nodes" />
+          </span>
+        </button>
+      </div>
+
+      <!-- <div class="flex text-white items-center divide-x-2 divide-slate-600 mb-6 bg-slate-900 rounded-md overflow-hidden">
         <button
           v-for="button in ([
             { tab: 'pins', icon: '𝄙', label: `${board.pins.length}` },
@@ -105,7 +147,7 @@
           <span class="text-base">{{ button.icon }}</span>
           <span>{{ button.label }}</span>
         </button>
-      </div>
+      </div> -->
 
       <div
         class="flex flex-col gap-1 transition-all duration-300 transform"

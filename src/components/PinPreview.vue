@@ -22,7 +22,7 @@
           </div>
         </div>
         <img
-          v-if="config.pinImageStyle !== 'background'"
+          v-if="config.pinImageStyle !== 'background' && pin.image"
           :src="pin.image"
           :alt="pin.title"
           class="h-full object-cover rounded"
@@ -69,7 +69,7 @@
           </button>
         </div>
         <img
-          v-if="config.pinImageStyle !== 'background'"
+          v-if="config.pinImageStyle !== 'background' && pin.image"
           :src="pin.image"
           :alt="pin.title"
           class="w-full h-auto object-cover rounded"
