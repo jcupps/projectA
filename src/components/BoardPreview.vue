@@ -1,5 +1,5 @@
 <template>
-  <section class="relative bg-white dark:bg-slate-800 rounded-lg shadow-sm overflow-hidden">
+  <section class="relative bg-slate-200/50 dark:bg-slate-800/50 rounded-lg shadow-md overflow-hidden cursor-pointer">
     <div class="p-4">
       <div class="flex gap-4 items-baseline justify-between">
         <div>
@@ -16,8 +16,13 @@
         class="flex flex-col gap-0.5 text-slate-800 dark:text-slate-100"
         :style="maskStyle"
       >
-        <!-- <PinCard v-for="pin in visiblePins" :key="pin.id" :pin="pin" /> -->
-         <div
+        <PinCard
+          v-for="pin in visiblePins"
+          :key="pin.id"
+          :pin="pin"
+          :style="'truncated'"
+        />
+         <!-- <div
           v-for="pin in visiblePins"
           :key="pin.id"
           class="flex gap-3 justify-between items-center bg-slate-700/50 h-10 px-2 py-1 border border-slate-200 dark:border-slate-700 rounded"
@@ -29,7 +34,7 @@
             :alt="pin.title"
             class="h-full object-cover rounded"
           />
-        </div>
+        </div> -->
       </div>
       <div v-if="moreCount > 0" class="relative z-20 mt-1 text-center text-sm text-slate-600 dark:text-slate-300">
         +{{ moreCount }} more

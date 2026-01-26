@@ -65,6 +65,15 @@
               <span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-red-500">{{ pin.likes }}</span>
             </button>
             <button
+              @click="() => {}"
+              class="flex items-center gap-2 group hover:text-blue-500 transition-colors"
+            >
+              <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">
+                <font-awesome-icon icon="fa-regular fa-comment" />
+              </span>
+              <span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-blue-500">{{ pin.comments?.length ?? 0 }}</span>
+            </button>
+            <button
               class="flex items-center gap-2 group hover:text-blue-500 transition-colors"
             >
               <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">

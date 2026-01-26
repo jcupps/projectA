@@ -1,14 +1,22 @@
 <template>
-  <article v-if="!isExpanded" class="rounded-2xl overflow-hidden shadow-sm dark:bg-slate-800 dark:hover:bg-slate-700
-    border-2 border-sky-300/30 transition-colors">
+  <article
+    v-if="!isExpanded"
+      :class="[
+        'rounded-2xl overflow-hidden shadow-sm bg-slate-200 dark:bg-slate-800',
+        'border-2 border-sky-300/30 transition-colors',
+        style === 'detailed' ? 'hover:bg-slate-300 dark:hover:bg-slate-700' : ''
+      ]"
+    >
     <div
-      class="relative h-16 bg-cover bg-center"
+      :class="['relative bg-cover bg-center', style === 'truncated' ? 'h-12' : 'h-16']"
       :style="config.pinImageStyle === 'background' ? { backgroundImage: `url(${pin.image})` } : {}"
       role="img"
       :aria-label="pin.title"
     >
-      <!-- I think this was added as an overlay for the bg image. -->
-      <!-- <div class="absolute inset-0 bg-white/60 dark:bg-black/60"></div> -->
+      <!-- Add an overlay to darken the bg image. -->
+      <div
+        v-if="config.pinImageStyle === 'background'"
+        class="absolute inset-0 bg-white/60 dark:bg-black/60"></div>
 
       <div class="relative flex gap-4 items-center px-5 py-2 h-full">
         <div class="flex-1 min-w-0">
@@ -16,7 +24,9 @@
             <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-100 truncate"
               :style="{ 'view-transition-name': `pin-title-${pin.id}` }"
             >{{ pin.title }}</h3>
-            <div class="text-xs text-slate-500 dark:text-slate-300 flex items-center justify-between">
+            <div
+              v-if="style === 'detailed'"
+              class="text-xs text-slate-500 dark:text-slate-300 flex items-center justify-between">
               <span class="truncate">{{ pin.description }}</span>
             </div>
           </div>
@@ -28,7 +38,7 @@
           class="h-full object-cover rounded"
           :style="{ 'view-transition-name': `pin-img-${pin.id}` }"
         />
-        <div class="flex gap-2">
+        <div v-if="style === 'detailed'" class="flex gap-2">
           <div class="flex-col gap-1 text-xs text-slate-500 dark:text-slate-300 flex items-start justify-between w-12">
             <span class=" text-red-400"><font-awesome-icon icon="fa-regular fa-heart" /> {{ pin.likes }}</span>
             <span><font-awesome-icon icon="fa-regular fa-comment" /> {{ pin.comments?.length ?? 0 }}</span>
@@ -75,9 +85,40 @@
           class="w-full h-auto object-cover rounded"
           :style="{ 'view-transition-name': `pin-img-${pin.id}` }"
         />
-        <div class="flex-col gap-2 text-sm text-slate-500 dark:text-slate-300 flex items-start justify-between w-16">
-          <span class=" text-red-400"><font-awesome-icon icon="fa-regular fa-heart" /> {{ pin.likes }}</span>
-          <span><font-awesome-icon icon="fa-regular fa-comment" /> {{ pin.comments?.length ?? 0 }}</span>
+
+        <div class="flex gap-8 mb-6 text-slate-500 dark:text-slate-400">
+          <button
+            @click="() => {}"
+            class="flex items-center gap-2 group hover:text-red-500 transition-colors"
+          >
+            <span class="w-9 h-9 rounded-full group-hover:bg-red-500/10 flex items-center justify-center text-lg transition-colors">
+              <font-awesome-icon icon="fa-regular fa-heart" />
+            </span>
+            <span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-red-500">{{ pin.likes }}</span>
+          </button>
+          <button
+            @click="() => {}"
+            class="flex items-center gap-2 group hover:text-blue-500 transition-colors"
+          >
+            <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">
+              <font-awesome-icon icon="fa-regular fa-comment" />
+            </span>
+            <span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-blue-500">{{ pin.comments?.length ?? 0 }}</span>
+          </button>
+          <button
+            class="flex items-center gap-2 group hover:text-blue-500 transition-colors"
+          >
+            <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">
+              <font-awesome-icon icon="fa-regular fa-bookmark" />
+            </span>
+          </button>
+          <button
+            class="flex items-center gap-2 group hover:text-blue-500 transition-colors"
+          >
+            <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">
+              <font-awesome-icon icon="fa-solid fa-share-nodes" />
+            </span>
+          </button>
         </div>
       </div>
     </div>
@@ -89,7 +130,7 @@ import type { Pin } from '../data/mockPins'
 import config from '../config';
 import { ref } from 'vue';
 
-const props = defineProps<{ pin: Pin }>()
+const { style = 'detailed' } = defineProps<{ pin: Pin, style?: 'truncated' | 'detailed' }>()
 const isExpanded = ref(false);
 
 function collapse() {
