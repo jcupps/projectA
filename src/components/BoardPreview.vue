@@ -1,5 +1,6 @@
 <template>
-  <section class="relative bg-slate-200/50 dark:bg-slate-800/50 rounded-lg shadow-md overflow-hidden cursor-pointer">
+  <section class="relative bg-slate-200/50 dark:bg-slate-800/50
+    rounded-lg shadow-md dark:shadow-gray-950/80 overflow-hidden cursor-pointer">
     <div class="p-4">
       <div class="flex gap-4 items-baseline justify-between">
         <div>
@@ -20,7 +21,7 @@
           v-for="pin in visiblePins"
           :key="pin.id"
           :pin="pin"
-          :style="'truncated'"
+          :style="'truncated'"1px solid darkblue
         />
          <!-- <div
           v-for="pin in visiblePins"

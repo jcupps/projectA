@@ -1,21 +1,21 @@
 <template>
-  <div class="min-h-screen bg-white dark:bg-slate-800">
+  <div class="min-h-screen">
     <!-- Header with Back Button -->
-    <div class="sticky top-0 z-40 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shadow-sm">
-      <div class="p-6 flex items-center justify-between">
+    <div class="sticky top-0 z-40">
+      <div class="px-6 pt-3 flex items-center justify-between">
         <router-link
           :to="{ name: 'BoardDetail', params: { id: boardId } }"
           class="flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
         >
           <span class="text-2xl">←</span>
-          Back to Board
+          {{  board?.title }}
         </router-link>
       </div>
     </div>
 
     <!-- Main Content -->
     <div v-if="pin" class="p-6">
-      <div class="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-lg">
+      <div class="overflow-hidden">
         <!-- Content Section -->
         <div>
           <!-- Title -->
@@ -25,21 +25,10 @@
             {{ pin.title }}
           </h1>
 
-          <!-- Author -->
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xl font-semibold">
-              {{ pin.author.charAt(0) }}
-            </div>
-            <div>
-              <div class="font-semibold text-lg text-slate-700 dark:text-slate-300">{{ pin.author }}</div>
-            </div>
-          </div>
-
           <!-- Description Section (text content first) -->
           <div class="mb-6">
             <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
-              This beautiful image by {{ pin.author }} has received {{ pin.likes }} likes from our community.
-              Discover more amazing content from this creator and share your thoughts with others.
+              {{ pin.description }}
             </p>
           </div>
 

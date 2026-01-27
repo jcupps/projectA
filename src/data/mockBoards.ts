@@ -11,6 +11,7 @@ export interface Board {
   id: number
   title: string
   description?: string
+  author: string
   pins: Pin[],
   likes: number,
   comments: Comment[],
@@ -195,6 +196,24 @@ const travelDescriptions = [
   'Epic driving adventure through Iceland visiting glaciers, waterfalls, geysers, and black sand beaches.'
 ]
 
+const powerOutageTips = [
+  '1. Stock up on non-perishables',
+  '2. Keep a water supply',
+  '3. Have flashlights on hand',
+  '4. Get a radio',
+  '5. Keep your devices charged',
+  '6. Stay warm'
+]
+
+const powerOutageDescriptions = [
+  'Stock up on non-perishable food items like canned goods, dried fruits, and nuts. Non-perishable foods ensure you have sustenance without relying on refrigeration.',
+  'Keep a supply of bottled water for drinking and basic hygiene needs. Adequate water supply is crucial for hydration and sanitation during outages.',
+  'Have flashlights and extra batteries readily available in multiple locations. Flashlights provide essential lighting when the power goes out unexpectedly.',
+  'Use a battery-powered or hand-crank radio to stay informed about weather and news updates. Staying informed helps you make safe decisions during emergencies.',
+  'Charge all electronic devices beforehand and consider investing in portable power banks. Charged devices allow communication and access to important information.',
+  'Keep blankets, warm clothing, and sleeping bags accessible to stay warm if heating is unavailable. Warm clothing and blankets help maintain body heat in cold conditions.'
+]
+
 const makePinsFromTitles = (titles: string[], descriptions: string[], authorBase: string) =>
   titles.map((t, i) => makePin(t, `${authorBase}`, descriptions[i], Math.random() > 0.3))
 
@@ -251,6 +270,7 @@ export const mockBoards: Board[] = [
     id: 1,
     title: 'Indian Recipes',
     description: 'Popular and traditional Indian dishes to try at home',
+    author: 'Chef Arjun',
     pins: makePinsFromTitles(indianTitles, indianDescriptions, 'Chef Arjun'),
     comments: mockComments[1] || [],
     likes: 124
@@ -259,6 +279,7 @@ export const mockBoards: Board[] = [
     id: 2,
     title: 'Dessert Recipes',
     description: 'Sweet treats and dessert recipes from around the world',
+    author: 'Baker Mila',
     pins: makePinsFromTitles(dessertTitles, dessertDescriptions, 'Baker Mila'),
     comments: mockComments[2] || [],
     likes: 98
@@ -267,6 +288,7 @@ export const mockBoards: Board[] = [
     id: 3,
     title: 'Book Club Reading List',
     description: 'Essential classical works to read and re-read',
+    author: 'Literary Curator',
     pins: makePinsFromTitles(classicalReading, classicalDescriptions, 'Literary Curator'),
     comments: mockComments[3] || [],
     likes: 76
@@ -275,6 +297,7 @@ export const mockBoards: Board[] = [
     id: 4,
     title: 'Fantasy Reading List',
     description: 'Epic and modern fantasy picks for long reading sessions',
+    author: 'Fantasy Guild',
     pins: makePinsFromTitles(fantasyList, fantasyDescriptions, 'Fantasy Guild'),
     comments: mockComments[4] || [],
     likes: 89
@@ -283,6 +306,7 @@ export const mockBoards: Board[] = [
     id: 5,
     title: 'Workout Routines',
     description: 'Short and effective routines to build strength and stamina',
+    author: 'Coach Riley',
     pins: makePinsFromTitles(workouts, workoutDescriptions, 'Coach Riley'),
     comments: mockComments[5] || [],
     likes: 143
@@ -291,6 +315,7 @@ export const mockBoards: Board[] = [
     id: 6,
     title: 'Decor Inspirations',
     description: 'Styling ideas for home decor and small spaces',
+    author: 'Home Stylist',
     pins: makePinsFromTitles(decor, decorDescriptions, 'Home Stylist'),
     comments: mockComments[6] || [],
     likes: 110
@@ -299,6 +324,7 @@ export const mockBoards: Board[] = [
     id: 7,
     title: 'House Search List',
     description: 'Dream homes and properties to consider for relocation',
+    author: 'Real Estate Scout',
     pins: makePinsFromTitles(houseNames, houseDescriptions, 'Real Estate Scout'),
     comments: mockComments[7] || [],
     likes: 95
@@ -307,6 +333,7 @@ export const mockBoards: Board[] = [
     id: 8,
     title: 'Wedding Gift Registry',
     description: 'Curated collection of gifts for the perfect home setup',
+    author: 'Wedding Planner',
     pins: makePinsFromTitles(weddingGifts, weddingDescriptions, 'Wedding Planner'),
     comments: mockComments[8] || [],
     likes: 130
@@ -315,9 +342,19 @@ export const mockBoards: Board[] = [
     id: 9,
     title: 'Travel Bucket List',
     description: 'Dream destinations and must-visit places around the world',
+    author: 'Globe Trotter',
     pins: makePinsFromTitles(travelDestinations, travelDescriptions, 'Travel Enthusiast'),
     comments: mockComments[9] || [],
     likes: 150
+  },
+  {
+    id: 10,
+    title: 'Power Outage Survival Tips',
+    description: 'Essential tips and tricks to stay safe and comfortable during power outages',
+    author: 'Doomsday Prepper',
+    pins: makePinsFromTitles(powerOutageTips, powerOutageDescriptions, 'Doomsday Prepper'),
+    comments: mockComments[9] || [],
+    likes: 52
   }
 ]
 
