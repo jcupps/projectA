@@ -16,18 +16,27 @@
       <!-- Add an overlay to darken the bg image. -->
       <div
         v-if="config.pinImageStyle === 'background'"
-        class="absolute inset-0 bg-white/60 dark:bg-black/60"></div>
+        class="absolute inset-0 bg-white/60 dark:bg-black/60"
+      ></div>
 
-      <div class="relative flex gap-4 items-center px-5 py-2 h-full">
-        <div class="flex-1 min-w-0">
-          <div class="flex flex-col gap-0.5">
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-100 truncate"
+      <div class="relative flex gap-4 items-center ps-5 pe-1 py-2 h-full">
+        <div class="flex-1 min-w-0 h-full">
+          <div class="flex flex-col gap-1 h-full justify-end">
+            <h3 class="font-semibold text-slate-800 dark:text-slate-100 truncate"
               :style="{ 'view-transition-name': `pin-title-${pin.id}` }"
             >{{ pin.title }}</h3>
+            <!-- <div
+              v-if="style === 'detailed'"
+              class="text-xs text-slate-500 dark:text-slate-300 flex items-center justify-between"
+            >
+              <span class="truncate">{{ pin.description }}</span>
+            </div> -->
             <div
               v-if="style === 'detailed'"
-              class="text-xs text-slate-500 dark:text-slate-300 flex items-center justify-between">
-              <span class="truncate">{{ pin.description }}</span>
+              class="flex gap-4 text-xs text-slate-500 dark:text-slate-300 items-start ps-2"
+            >
+              <span class=" text-red-400"><font-awesome-icon icon="fa-regular fa-heart" /> {{ pin.likes }}</span>
+              <span><font-awesome-icon icon="fa-regular fa-comment" /> {{ pin.comments?.length ?? 0 }}</span>
             </div>
           </div>
         </div>
@@ -35,16 +44,16 @@
           v-if="config.pinImageStyle !== 'background' && pin.image"
           :src="pin.image"
           :alt="pin.title"
-          class="h-full object-cover rounded"
+          class="h-full object-cover rounded w-20"
           :style="{ 'view-transition-name': `pin-img-${pin.id}` }"
         />
-        <div v-if="style === 'detailed'" class="flex gap-2">
-          <div class="flex-col gap-1 text-xs text-slate-500 dark:text-slate-300 flex items-start justify-between w-12">
+        <div v-if="style === 'detailed'" class="flex gap-2 h-full">
+          <!-- <div class="flex-col gap-1 text-xs text-slate-500 dark:text-slate-300 flex items-start justify-between w-12">
             <span class=" text-red-400"><font-awesome-icon icon="fa-regular fa-heart" /> {{ pin.likes }}</span>
             <span><font-awesome-icon icon="fa-regular fa-comment" /> {{ pin.comments?.length ?? 0 }}</span>
-          </div>
+          </div> -->
           <button
-            class="w-6 h-6 rounded-full bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+            class="w-10 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all h-full"
             @click.stop.prevent="expand"
           >
             <font-awesome-icon icon="fa-solid fa-chevron-down" class="text-slate-600 dark:text-slate-300 text-xs" />
@@ -61,7 +70,7 @@
       role="img"
       :aria-label="pin.title"
     >
-      <div class="relative flex flex-col gap-4 px-5 py-4">
+      <div class="relative flex flex-col gap-4 ps-5 pe-1 py-4">
         <div class="flex flex-1 gap-3 min-w-0 justify-between">
           <div class="flex flex-col gap-1">
             <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100"
@@ -73,7 +82,7 @@
           </div>
           <button
             @click.stop.prevent="collapse"
-            class="w-8 h-8 rounded-full bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+            class="w-10 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all h-full shrink-0"
           >
             <font-awesome-icon icon="fa-solid fa-chevron-down" class="text-slate-600 dark:text-slate-300 text-xs rotate-180" />
           </button>
@@ -130,18 +139,34 @@ import type { Pin } from '../data/mockPins'
 import config from '../config';
 import { ref } from 'vue';
 
-const { style = 'detailed' } = defineProps<{ pin: Pin, style?: 'truncated' | 'detailed' }>()
+const { pin, style = 'detailed' } = defineProps<{ pin: Pin, style?: 'truncated' | 'detailed' }>()
 const isExpanded = ref(false);
 
+const emit = defineEmits<{
+  (e: 'expand', pinId: number): void;
+}>();
+
 function collapse() {
+  if (!isExpanded.value) return;
+
   document.startViewTransition(() => {
     isExpanded.value = false;
   });
 }
 
 function expand() {
+  if (isExpanded.value) return;
+
   document.startViewTransition(() => {
     isExpanded.value = true;
   });
+
+  emit('expand', pin.id);
 }
+
+defineExpose({
+  pin,
+  expand,
+  collapse
+});
 </script>

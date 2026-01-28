@@ -174,7 +174,7 @@
           :to="{ name: 'PinDetail', params: { boardId: board.id, pinId: pin.id } }"
           class="transition-transform hover:scale-102 block"
         >
-          <PinCard :pin="pin" />
+          <PinCard :pin="pin" @expand="onPinExpand" ref="pinRef" />
         </router-link>
       </div>
       <div 
@@ -261,8 +261,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useSwipe } from '@vueuse/core'
+import { ref, computed, useTemplateRef } from 'vue'
+import { until, useSwipe, useTimeout } from '@vueuse/core'
 import type { Board as BoardType, Comment } from '../data/mockBoards'
 import type { Pin } from '../data/mockPins'
 import PinCard from './PinPreview.vue'
@@ -366,5 +366,17 @@ const formatDate = (date: Date) => {
   if (days < 7) return `${days}d ago`
   
   return date.toLocaleDateString()
+}
+
+const pinRefs = useTemplateRef('pinRef');
+
+function onPinExpand(pinId: number) {
+  pinRefs.value?.forEach((pinComp) => {
+    if (pinComp == null) { return; }
+
+    if (pinComp.pin.id !== pinId) {
+      pinComp.collapse();
+    }
+  });
 }
 </script>

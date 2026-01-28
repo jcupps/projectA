@@ -2,7 +2,7 @@
   <div class="min-h-screen">
     <!-- Header with Back Button -->
     <div class="sticky top-0 z-40">
-      <div class="px-6 pt-3 flex items-center justify-between">
+      <div class="pt-3 flex items-center justify-between">
         <router-link
           :to="{ name: 'BoardDetail', params: { id: boardId } }"
           class="flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
@@ -14,12 +14,12 @@
     </div>
 
     <!-- Main Content -->
-    <div v-if="pin" class="p-6">
+    <div v-if="pin" class="py-4">
       <div class="overflow-hidden">
         <!-- Content Section -->
         <div>
           <!-- Title -->
-          <h1 class="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4"
+          <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4"
             :style="{ 'view-transition-name': `pin-title-${pin.id}` }"
           >
             {{ pin.title }}
