@@ -6,6 +6,7 @@ export interface Pin {
   image?: string
   author: string
   description?: string
+  body?: string
   likes: number
   comments?: Comment[]
 }

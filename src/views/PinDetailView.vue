@@ -42,6 +42,8 @@
             />
           </div>
 
+          <div class="whitespace-pre text-slate-900 dark:text-slate-100 mb-8">{{ pin.body }}</div>
+
           <!-- Action Buttons -->
           <div class="flex gap-8 mb-6 text-slate-500 dark:text-slate-400">
             <button

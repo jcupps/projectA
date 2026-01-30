@@ -22,200 +22,220 @@ const makeImage = (seed: string, w = 800, h = 600) =>
   `https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${h}`
 
 let idCounter = 1
-const makePin = (title: string, author: string, description: string, hasImage?: boolean) => {
+const makePin = (
+  pinData: { title: string; description: string, image?: string, body?: string },
+  author: string,
+  generateImages: boolean = true
+) => {
   const pin: Pin = {
     id: idCounter++,
-    title,
-    image: hasImage ? makeImage(title) : undefined,
+    title: pinData.title,
+    image: pinData.image ?? (generateImages && Math.random() > 0.4 ? makeImage(pinData.title) : undefined),
     author,
-    description,
+    description: pinData.description,
+    body: pinData.body,
     likes: Math.floor(Math.random() * 900) + 20
   }
   return pin
 }
 
-const indianTitles = [
-  'Butter Chicken',
-  'Masala Dosa',
-  'Palak Paneer',
-  'Chole Bhature',
-  'Biryani (Hyderabadi)',
-  'Aloo Gobi'
+const indianPins = [
+  {
+    title: 'Butter Chicken',
+    description: 'Rich and creamy tomato-based curry with tender chicken pieces, perfect with naan or rice.',
+    body: `Marinade:
+
+    1 ¾ pounds skinless, boneless chicken breast halves - cubed
+
+    3 tablespoons lemon juice, divided
+
+    2 tablespoons chili powder, divided
+
+    salt to taste
+
+    1 cup yogurt
+
+    2 tablespoons olive oil
+
+    2 tablespoons garlic paste
+
+    2 tablespoons ginger paste
+
+    2 tablespoons melted butter
+
+    1 ½ teaspoons garam masala
+
+Sauce:
+
+    1 tablespoon butter
+
+    1 tablespoon garam masala
+
+    1 tablespoon ginger paste
+
+    1 tablespoon chopped garlic
+
+    1 tablespoon chopped green chile pepper
+
+    2 cups tomato puree
+
+    1 cup water
+
+    1 tablespoon chili powder
+
+    salt to taste
+
+    1 tablespoon honey
+
+    ½ teaspoon dried fenugreek leaves
+
+    1 cup heavy cream
+`,
+    image: 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2023%2F02%2F07%2F5830864-makhani-chicken-indian-butter-chicken-MotherSarah-1x1-1.jpg&q=60&c=sc&poi=auto&orient=true&h=512'
+  },
+  {
+    title: 'Chicken Saag',
+    description: 'Tender chicken cooked in a flavorful spinach gravy with aromatic spices.',
+    image: 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1007395.jpg&q=60&c=sc&poi=auto&orient=true&h=512'
+  },
+  {
+    title: 'Palak Paneer',
+    description: 'Creamed spinach with fresh cottage cheese cubes, a classic vegetarian delight.',
+    image: 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F9423499.jpg&q=60&c=sc&poi=auto&orient=true&h=512'
+  },
+  { title: 'Chole Bhature', description: 'Deep-fried bread served with spiced chickpea curry, a popular street food favorite.' },
+  { title: 'Biryani (Hyderabadi)', description: 'Fragrant rice cooked with meat and spices, a royal dish with layers of flavor.' },
+  {
+    title: 'Aloo Gobi',
+    description: 'Simple and delicious stir-fried potatoes with cauliflower and aromatic spices.',
+    image: 'https://www.allrecipes.com/thmb/lVUDh4PrStKg55Ro0-umadES-Kc=/750x0/filters:no_upscale():max_bytes(150000):strip_icc()/4469167-aloo-gobi-masala-cauliflower-and-potato-curry-Allrecipes-Magazine-4x3-1-d8ab6614b61f4787a9c262ec6a867df3.jpg'
+  }
 ]
 
-const indianDescriptions = [
-  'Rich and creamy tomato-based curry with tender chicken pieces, perfect with naan or rice.',
-  'Crispy lentil crepe with potato and onion filling, served with coconut and chutney.',
-  'Creamed spinach with fresh cottage cheese cubes, a classic vegetarian delight.',
-  'Deep-fried bread served with spiced chickpea curry, a popular street food favorite.',
-  'Fragrant rice cooked with meat and spices, a royal dish with layers of flavor.',
-  'Simple and delicious stir-fried potatoes with cauliflower and aromatic spices.'
+const dessertPins = [
+  { title: 'Chocolate Lava Cake', description: 'Decadent warm chocolate cake with a molten center, perfect for chocolate lovers.' },
+  { title: 'Gulab Jamun', description: 'Sweet milk solids dumplings soaked in rose-flavored sugar syrup, an Indian classic.' },
+  { title: 'Raspberry Cheesecake', description: 'Creamy cheesecake with tart raspberry layer, a modern dessert favorite.' },
+  { title: 'Tiramisu', description: 'Italian no-bake dessert with layers of mascarpone cream and espresso-soaked ladyfingers.' },
+  { title: 'Mango Kulfi', description: 'Frozen Indian ice cream with mango pulp and traditional flavors, served as bars.' },
+  { title: 'Pistachio Baklava', description: 'Crispy phyllo pastry layered with pistachios and honey, a Middle Eastern treat.' }
 ]
 
-const dessertTitles = [
-  'Chocolate Lava Cake',
-  'Gulab Jamun',
-  'Raspberry Cheesecake',
-  'Tiramisu',
-  'Mango Kulfi',
-  'Pistachio Baklava'
+const classicalPins = [
+  {
+    title: 'Pride and Prejudice — Jane Austen',
+    description: 'A witty romantic novel exploring love, class, and personal growth in Georgian England.',
+    image: 'https://m.media-amazon.com/images/I/71f5FjkTnkL._AC_UL320_.jpg'
+  },
+  { title: 'Meditations — Marcus Aurelius', description: 'Philosophical meditations on virtue, resilience, and living a meaningful life.' },
+  {
+    title: 'The Odyssey — Homer',
+    description: 'An epic journey of Odysseus trying to return home after the Trojan War, timeless adventure.',
+    image: 'https://m.media-amazon.com/images/I/71LEtbDQyvL._AC_UL320_.jpg'
+  },
+  {
+    title: 'Crime and Punishment — Fyodor Dostoevsky',
+    description: 'A psychological thriller about guilt and redemption in 19th century Russia.',
+    image: 'https://m.media-amazon.com/images/I/71O2XIytdqL._AC_UL320_.jpg'
+  },
+  {
+    title: 'The Divine Comedy — Dante Alighieri',
+    description: 'A poetic journey through Hell, Purgatory, and Paradise, exploring divine justice.',
+    image: 'https://m.media-amazon.com/images/I/91nRZwNtK2L._AC_UL320_.jpg'
+  },
+  { title: 'Jane Eyre — Charlotte Brontë', description: 'A gothic romance following an orphan girl\'s struggles and triumph against adversity.' }
 ]
 
-const dessertDescriptions = [
-  'Decadent warm chocolate cake with a molten center, perfect for chocolate lovers.',
-  'Sweet milk solids dumplings soaked in rose-flavored sugar syrup, an Indian classic.',
-  'Creamy cheesecake with tart raspberry layer, a modern dessert favorite.',
-  'Italian no-bake dessert with layers of mascarpone cream and espresso-soaked ladyfingers.',
-  'Frozen Indian ice cream with mango pulp and traditional flavors, served as bars.',
-  'Crispy phyllo pastry layered with pistachios and honey, a Middle Eastern treat.'
+const fantasyPins = [
+  { title: 'The Name of the Wind — Patrick Rothfuss', description: 'The origin story of Kvothe, a legendary figure, told through his own captivating recollections.' },
+  { title: 'The Hobbit — J.R.R. Tolkien', description: 'A short but adventure-filled journey of Bilbo Baggins discovering courage and treasure.' },
+  { title: 'The Lies of Locke Lamora — Scott Lynch', description: 'A witty con-artist tale with intricate plotting and unforgettable characters in a fantasy Venice.' },
+  { title: 'A Wizard of Earthsea — Ursula K. Le Guin', description: 'A coming-of-age wizard story about balance between magic and responsibility, beautifully written.' },
+  { title: 'The Blade Itself — Joe Abercrombie', description: 'A gritty, character-driven epic with morally complex protagonists and brutal battles.' },
+  { title: 'Mistborn — Brandon Sanderson', description: 'An intricate fantasy world with unique magic systems and multiple interconnected narratives.' }
 ]
 
-const classicalReading = [
-  'Pride and Prejudice — Jane Austen',
-  'Meditations — Marcus Aurelius',
-  'The Odyssey — Homer',
-  'Crime and Punishment — Fyodor Dostoevsky',
-  'The Divine Comedy — Dante Alighieri',
-  'Jane Eyre — Charlotte Brontë'
+const workoutPins = [
+  { title: 'Full Body HIIT (30 mins)', description: 'High-intensity interval training combining cardio and strength for maximum efficiency.' },
+  { title: 'Upper Body Strength (45 mins)', description: 'Focused strength work for chest, back, shoulders, and arms with progressive overload.' },
+  { title: 'Yoga Flow (30 mins)', description: 'Mindful flowing sequences building flexibility, balance, and inner calm.' },
+  { title: 'Core Blast (20 mins)', description: 'Targeted core exercises to build strength in abs, obliques, and lower back.' },
+  { title: 'Sprint Intervals (25 mins)', description: 'Speed and endurance building through short, intense running intervals with rest periods.' },
+  { title: 'Leg Day Circuit (40 mins)', description: 'Comprehensive leg workout targeting quads, hamstrings, glutes, and calves.' }
 ]
 
-const classicalDescriptions = [
-  'A witty romantic novel exploring love, class, and personal growth in Georgian England.',
-  'Philosophical meditations on virtue, resilience, and living a meaningful life.',
-  'An epic journey of Odysseus trying to return home after the Trojan War, timeless adventure.',
-  'A psychological thriller about guilt and redemption in 19th century Russia.',
-  'A poetic journey through Hell, Purgatory, and Paradise, exploring divine justice.',
-  'A gothic romance following an orphan girl\'s struggles and triumph against adversity.'
+const decorPins = [
+  { title: 'Boho Living Room Setup', description: 'Create a warm, eclectic space with layered textures, natural materials, and global-inspired decor.' },
+  { title: 'Minimalist Bedroom Ideas', description: 'Design a calm, clutter-free bedroom with neutral colors and essential furniture pieces.' },
+  { title: 'Cozy Reading Nook', description: 'Build the perfect cozy corner with comfortable seating, good lighting, and personal touches.' },
+  { title: 'Indoor Plant Styling', description: 'Elevate your space with greenery, combining pots, stands, and hanging planters artfully.' },
+  { title: 'Gallery Wall Inspiration', description: 'Create visual interest with a curated collection of art, photos, and prints on your walls.' },
+  { title: 'Small Balcony Makeover', description: 'Transform a small outdoor space into a functional and beautiful retreat with smart furnishing.' }
 ]
 
-const fantasyList = [
-  'The Name of the Wind — Patrick Rothfuss',
-  'The Hobbit — J.R.R. Tolkien',
-  'The Lies of Locke Lamora — Scott Lynch',
-  'A Wizard of Earthsea — Ursula K. Le Guin',
-  'The Blade Itself — Joe Abercrombie',
-  'Mistborn — Brandon Sanderson'
+const housePins = [
+  {
+    title: '245 Oak Ridge Dr.',
+    description: 'Urban living with exposed brick, high ceilings, and open floor plan. Perfect for young professionals.',
+    image: 'https://photos.zillowstatic.com/fp/fe609ad06ba7ad18f9fcd06705708924-p_e.webp'
+  },
+  {
+    title: '1847 Maple Ave.',
+    description: 'Spacious family home with 4 bedrooms, good schools nearby, and a beautiful backyard.',
+    image: 'https://photos.zillowstatic.com/fp/7f87327edacefd5c47496fef617b7863-p_e.webp'
+  },
+  {
+    title: '512 Coastal Highway Ln.',
+    description: 'Stunning ocean views with private beach access, modern amenities, and elegant architecture.',
+    image: 'https://photos.zillowstatic.com/fp/01ebd9275fda23df49bc61d14a23ca5e-p_e.webp'
+  },
+  { title: '3925 Mountain View Rd.',
+    description: 'Cozy mountain escape with stone fireplace, deck overlooking forest, and peaceful setting.',
+    image: 'https://photos.zillowstatic.com/fp/d2c613e3bfccde1b2c16d4391091c303-p_e.webp'
+  },
+  { title: '621 Historic District St.',
+    description: 'Charming 1920s building in trendy neighborhood with original details and rooftop terrace.',
+    image: 'https://photos.zillowstatic.com/fp/34842cc449afa9cbfead053fa3a91bd2-p_e.webp'
+  },
+  { title: '784 Innovation Park Way',
+    description: 'Smart home automation, solar panels, energy efficient, with cutting-edge kitchen and tech integration.',
+    image: 'https://photos.zillowstatic.com/fp/5e20a023dba08abf8283a31c4ba6184f-p_e.webp'
+  }
 ]
 
-const fantasyDescriptions = [
-  'The origin story of Kvothe, a legendary figure, told through his own captivating recollections.',
-  'A short but adventure-filled journey of Bilbo Baggins discovering courage and treasure.',
-  'A witty con-artist tale with intricate plotting and unforgettable characters in a fantasy Venice.',
-  'A coming-of-age wizard story about balance between magic and responsibility, beautifully written.',
-  'A gritty, character-driven epic with morally complex protagonists and brutal battles.',
-  'An intricate fantasy world with unique magic systems and multiple interconnected narratives.'
+const weddingPins = [
+  { title: 'Luxury Bedding Set', description: 'Egyptian cotton sheets and duvet cover in champagne, perfect for a luxurious bedroom.' },
+  { title: 'Premium Cookware', description: 'Professional-grade stainless steel pots and pans, ideal for couples who love cooking together.' },
+  { title: 'Wine Decanter Set', description: 'Hand-blown crystal decanter with accompanying wine glasses for entertaining guests.' },
+  { title: 'Espresso Machine', description: 'Automatic espresso machine with grinder, perfect for morning coffee rituals at home.' },
+  { title: 'Silk Throw Pillows', description: 'Set of 4 silk throw pillows in neutral tones to enhance living room comfort and style.' },
+  { title: 'Crystal Vase Collection', description: 'Set of 3 hand-crafted crystal vases of varying heights for flower arrangements.' }
 ]
 
-const workouts = [
-  'Full Body HIIT (30 mins)',
-  'Upper Body Strength (45 mins)',
-  'Yoga Flow (30 mins)',
-  'Core Blast (20 mins)',
-  'Sprint Intervals (25 mins)',
-  'Leg Day Circuit (40 mins)'
+const travelPins = [
+  { title: 'Kyoto, Japan', description: 'Ancient temples, traditional gardens, and geisha culture. Experience traditional Japan at its finest.' },
+  { title: 'Amalfi Coast, Italy', description: 'Colorful cliff villages, stunning coastal views, and incredible local cuisine along dramatic coastline.' },
+  { title: 'Machu Picchu, Peru', description: 'Iconic Incan citadel perched high in the Andes mountains with breathtaking archaeological wonders.' },
+  { title: 'Norwegian Fjords', description: 'Dramatic steep-sided valleys with waterfalls, glaciers, and unforgettable natural landscapes.' },
+  { title: 'Bali, Indonesia', description: 'Tropical paradise with white sand beaches, rice terraces, temples, and vibrant culture.' },
+  { title: 'Iceland - Ring Road', description: 'Epic driving adventure through Iceland visiting glaciers, waterfalls, geysers, and black sand beaches.' }
 ]
 
-const workoutDescriptions = [
-  'High-intensity interval training combining cardio and strength for maximum efficiency.',
-  'Focused strength work for chest, back, shoulders, and arms with progressive overload.',
-  'Mindful flowing sequences building flexibility, balance, and inner calm.',
-  'Targeted core exercises to build strength in abs, obliques, and lower back.',
-  'Speed and endurance building through short, intense running intervals with rest periods.',
-  'Comprehensive leg workout targeting quads, hamstrings, glutes, and calves.'
+const emergencyPins = [
+  { title: '1. Stock up on non-perishables', description: 'Stock up on non-perishable food items like canned goods, dried fruits, and nuts. Non-perishable foods ensure you have sustenance without relying on refrigeration.' },
+  { title: '2. Keep a water supply', description: 'Keep a supply of bottled water for drinking and basic hygiene needs. Adequate water supply is crucial for hydration and sanitation during outages.' },
+  { title: '3. Have flashlights on hand', description: 'Have flashlights and extra batteries readily available in multiple locations. Flashlights provide essential lighting when the power goes out unexpectedly.' },
+  { title: '4. Get a radio', description: 'Use a battery-powered or hand-crank radio to stay informed about weather and news updates. Staying informed helps you make safe decisions during emergencies.' },
+  { title: '5. Keep your devices charged', description: 'Charge all electronic devices beforehand and consider investing in portable power banks. Charged devices allow communication and access to important information.' },
+  { title: '6. Stay warm', description: 'Keep blankets, warm clothing, and sleeping bags accessible to stay warm if heating is unavailable. Warm clothing and blankets help maintain body heat in cold conditions.' }
 ]
 
-const decor = [
-  'Boho Living Room Setup',
-  'Minimalist Bedroom Ideas',
-  'Cozy Reading Nook',
-  'Indoor Plant Styling',
-  'Gallery Wall Inspiration',
-  'Small Balcony Makeover'
-]
-
-const decorDescriptions = [
-  'Create a warm, eclectic space with layered textures, natural materials, and global-inspired decor.',
-  'Design a calm, clutter-free bedroom with neutral colors and essential furniture pieces.',
-  'Build the perfect cozy corner with comfortable seating, good lighting, and personal touches.',
-  'Elevate your space with greenery, combining pots, stands, and hanging planters artfully.',
-  'Create visual interest with a curated collection of art, photos, and prints on your walls.',
-  'Transform a small outdoor space into a functional and beautiful retreat with smart furnishing.'
-]
-
-const houseNames = [
-  '245 Oak Ridge Dr.',
-  '1847 Maple Ave.',
-  '512 Coastal Highway Ln.',
-  '3925 Mountain View Rd.',
-  '621 Historic District St.',
-  '784 Innovation Park Way'
-]
-
-const houseDescriptions = [
-  'Urban living with exposed brick, high ceilings, and open floor plan. Perfect for young professionals.',
-  'Spacious family home with 4 bedrooms, good schools nearby, and a beautiful backyard.',
-  'Stunning ocean views with private beach access, modern amenities, and elegant architecture.',
-  'Cozy mountain escape with stone fireplace, deck overlooking forest, and peaceful setting.',
-  'Charming 1920s building in trendy neighborhood with original details and rooftop terrace.',
-  'Smart home automation, solar panels, energy efficient, with cutting-edge kitchen and tech integration.'
-]
-
-const weddingGifts = [
-  'Luxury Bedding Set',
-  'Premium Cookware',
-  'Wine Decanter Set',
-  'Espresso Machine',
-  'Silk Throw Pillows',
-  'Crystal Vase Collection'
-]
-
-const weddingDescriptions = [
-  'Egyptian cotton sheets and duvet cover in champagne, perfect for a luxurious bedroom.',
-  'Professional-grade stainless steel pots and pans, ideal for couples who love cooking together.',
-  'Hand-blown crystal decanter with accompanying wine glasses for entertaining guests.',
-  'Automatic espresso machine with grinder, perfect for morning coffee rituals at home.',
-  'Set of 4 silk throw pillows in neutral tones to enhance living room comfort and style.',
-  'Set of 3 hand-crafted crystal vases of varying heights for flower arrangements.'
-]
-
-const travelDestinations = [
-  'Kyoto, Japan',
-  'Amalfi Coast, Italy',
-  'Machu Picchu, Peru',
-  'Norwegian Fjords',
-  'Bali, Indonesia',
-  'Iceland - Ring Road'
-]
-
-const travelDescriptions = [
-  'Ancient temples, traditional gardens, and geisha culture. Experience traditional Japan at its finest.',
-  'Colorful cliff villages, stunning coastal views, and incredible local cuisine along dramatic coastline.',
-  'Iconic Incan citadel perched high in the Andes mountains with breathtaking archaeological wonders.',
-  'Dramatic steep-sided valleys with waterfalls, glaciers, and unforgettable natural landscapes.',
-  'Tropical paradise with white sand beaches, rice terraces, temples, and vibrant culture.',
-  'Epic driving adventure through Iceland visiting glaciers, waterfalls, geysers, and black sand beaches.'
-]
-
-const powerOutageTips = [
-  '1. Stock up on non-perishables',
-  '2. Keep a water supply',
-  '3. Have flashlights on hand',
-  '4. Get a radio',
-  '5. Keep your devices charged',
-  '6. Stay warm'
-]
-
-const powerOutageDescriptions = [
-  'Stock up on non-perishable food items like canned goods, dried fruits, and nuts. Non-perishable foods ensure you have sustenance without relying on refrigeration.',
-  'Keep a supply of bottled water for drinking and basic hygiene needs. Adequate water supply is crucial for hydration and sanitation during outages.',
-  'Have flashlights and extra batteries readily available in multiple locations. Flashlights provide essential lighting when the power goes out unexpectedly.',
-  'Use a battery-powered or hand-crank radio to stay informed about weather and news updates. Staying informed helps you make safe decisions during emergencies.',
-  'Charge all electronic devices beforehand and consider investing in portable power banks. Charged devices allow communication and access to important information.',
-  'Keep blankets, warm clothing, and sleeping bags accessible to stay warm if heating is unavailable. Warm clothing and blankets help maintain body heat in cold conditions.'
-]
-
-const makePinsFromTitles = (titles: string[], descriptions: string[], authorBase: string) =>
-  titles.map((t, i) => makePin(t, `${authorBase}`, descriptions[i], Math.random() > 0.3))
+const makePinsFromArray = (
+  pinArray: { title: string; description: string, image?: string, body?: string }[],
+  authorBase: string,
+  generateImages: boolean = true
+) =>
+  pinArray.map((pin) => makePin(pin, `${authorBase}`, generateImages))
 
 const mockComments: { [key: number]: Comment[] } = {
   1: [
@@ -269,9 +289,9 @@ export const mockBoards: Board[] = [
   {
     id: 1,
     title: 'Indian Recipes',
-    description: 'Popular and traditional Indian dishes to try at home',
+    description: 'Favorite Indian dishes',
     author: 'Chef Arjun',
-    pins: makePinsFromTitles(indianTitles, indianDescriptions, 'Chef Arjun'),
+    pins: makePinsFromArray(indianPins, 'Chef Arjun', false),
     comments: mockComments[1] || [],
     likes: 124
   },
@@ -280,7 +300,7 @@ export const mockBoards: Board[] = [
     title: 'Dessert Recipes',
     description: 'Sweet treats and dessert recipes from around the world',
     author: 'Baker Mila',
-    pins: makePinsFromTitles(dessertTitles, dessertDescriptions, 'Baker Mila'),
+    pins: makePinsFromArray(dessertPins, 'Baker Mila'),
     comments: mockComments[2] || [],
     likes: 98
   },
@@ -289,7 +309,7 @@ export const mockBoards: Board[] = [
     title: 'Book Club Reading List',
     description: 'Essential classical works to read and re-read',
     author: 'Literary Curator',
-    pins: makePinsFromTitles(classicalReading, classicalDescriptions, 'Literary Curator'),
+    pins: makePinsFromArray(classicalPins, 'Literary Curator', false),
     comments: mockComments[3] || [],
     likes: 76
   },
@@ -298,7 +318,7 @@ export const mockBoards: Board[] = [
     title: 'Fantasy Reading List',
     description: 'Epic and modern fantasy picks for long reading sessions',
     author: 'Fantasy Guild',
-    pins: makePinsFromTitles(fantasyList, fantasyDescriptions, 'Fantasy Guild'),
+    pins: makePinsFromArray(fantasyPins, 'Fantasy Guild'),
     comments: mockComments[4] || [],
     likes: 89
   },
@@ -307,7 +327,7 @@ export const mockBoards: Board[] = [
     title: 'Workout Routines',
     description: 'Short and effective routines to build strength and stamina',
     author: 'Coach Riley',
-    pins: makePinsFromTitles(workouts, workoutDescriptions, 'Coach Riley'),
+    pins: makePinsFromArray(workoutPins, 'Coach Riley'),
     comments: mockComments[5] || [],
     likes: 143
   },
@@ -316,7 +336,7 @@ export const mockBoards: Board[] = [
     title: 'Decor Inspirations',
     description: 'Styling ideas for home decor and small spaces',
     author: 'Home Stylist',
-    pins: makePinsFromTitles(decor, decorDescriptions, 'Home Stylist'),
+    pins: makePinsFromArray(decorPins, 'Home Stylist'),
     comments: mockComments[6] || [],
     likes: 110
   },
@@ -325,7 +345,7 @@ export const mockBoards: Board[] = [
     title: 'House Search List',
     description: 'Dream homes and properties to consider for relocation',
     author: 'Real Estate Scout',
-    pins: makePinsFromTitles(houseNames, houseDescriptions, 'Real Estate Scout'),
+    pins: makePinsFromArray(housePins, 'Real Estate Scout', false),
     comments: mockComments[7] || [],
     likes: 95
   },
@@ -334,7 +354,7 @@ export const mockBoards: Board[] = [
     title: 'Wedding Gift Registry',
     description: 'Curated collection of gifts for the perfect home setup',
     author: 'Wedding Planner',
-    pins: makePinsFromTitles(weddingGifts, weddingDescriptions, 'Wedding Planner'),
+    pins: makePinsFromArray(weddingPins, 'Wedding Planner'),
     comments: mockComments[8] || [],
     likes: 130
   },
@@ -342,8 +362,8 @@ export const mockBoards: Board[] = [
     id: 9,
     title: 'Travel Bucket List',
     description: 'Dream destinations and must-visit places around the world',
-    author: 'Globe Trotter',
-    pins: makePinsFromTitles(travelDestinations, travelDescriptions, 'Travel Enthusiast'),
+    author: 'Travel Enthusiast',
+    pins: makePinsFromArray(travelPins, 'Travel Enthusiast'),
     comments: mockComments[9] || [],
     likes: 150
   },
@@ -352,7 +372,7 @@ export const mockBoards: Board[] = [
     title: 'Power Outage Survival Tips',
     description: 'Essential tips and tricks to stay safe and comfortable during power outages',
     author: 'Doomsday Prepper',
-    pins: makePinsFromTitles(powerOutageTips, powerOutageDescriptions, 'Doomsday Prepper'),
+    pins: makePinsFromArray(emergencyPins, 'Doomsday Prepper'),
     comments: mockComments[9] || [],
     likes: 52
   }

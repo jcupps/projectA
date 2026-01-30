@@ -21,7 +21,7 @@
 
       <div class="relative flex gap-4 items-center ps-5 pe-1 py-2 h-full">
         <div class="flex-1 min-w-0 h-full">
-          <div class="flex flex-col gap-1 h-full justify-end">
+          <div :class="['flex flex-col gap-1 h-full', style === 'detailed' ? 'justify-end' : 'justify-center']">
             <h3 class="font-semibold text-slate-800 dark:text-slate-100 truncate"
               :style="{ 'view-transition-name': `pin-title-${pin.id}` }"
             >{{ pin.title }}</h3>

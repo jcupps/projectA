@@ -1,5 +1,5 @@
 <template>
-  <section class="relative bg-slate-200/50 dark:bg-slate-800/50
+  <section class="relative bg-slate-200/50 dark:bg-slate-800/50 border border-slate-700
     rounded-lg shadow-md dark:shadow-gray-950/80 overflow-hidden cursor-pointer">
     <div class="p-4">
       <div class="flex gap-4 items-baseline justify-between">
