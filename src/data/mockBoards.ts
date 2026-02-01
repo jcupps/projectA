@@ -42,7 +42,7 @@ const makePin = (
 const indianPins = [
   {
     title: 'Butter Chicken',
-    description: 'Rich and creamy tomato-based curry with tender chicken pieces, perfect with naan or rice.',
+    description: 'Rich and creamy tomato-based curry with tender chicken pieces, perfect with naan or rice.\nhttps://recipes.com/butter-chicken-makhani-guide',
     body: `Marinade:
 
     1 ¾ pounds skinless, boneless chicken breast halves - cubed
@@ -95,139 +95,139 @@ Sauce:
   },
   {
     title: 'Chicken Saag',
-    description: 'Tender chicken cooked in a flavorful spinach gravy with aromatic spices.',
+    description: 'Tender chicken cooked in a flavorful spinach gravy with aromatic spices.\nhttps://culinary-hub.io/chicken-saag-authentic-recipe',
     image: 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1007395.jpg&q=60&c=sc&poi=auto&orient=true&h=512'
   },
   {
     title: 'Palak Paneer',
-    description: 'Creamed spinach with fresh cottage cheese cubes, a classic vegetarian delight.',
+    description: 'Creamed spinach with fresh cottage cheese cubes, a classic vegetarian delight.\nhttps://veggie-kitchen.net/palak-paneer-cooking-tutorial',
     image: 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F9423499.jpg&q=60&c=sc&poi=auto&orient=true&h=512'
   },
-  { title: 'Chole Bhature', description: 'Deep-fried bread served with spiced chickpea curry, a popular street food favorite.' },
-  { title: 'Biryani (Hyderabadi)', description: 'Fragrant rice cooked with meat and spices, a royal dish with layers of flavor.' },
+  { title: 'Chole Bhature', description: 'Deep-fried bread served with spiced chickpea curry, a popular street food favorite.\nhttps://street-eats.com/chole-bhature-street-food-classic' },
+  { title: 'Biryani (Hyderabadi)', description: 'Fragrant rice cooked with meat and spices, a royal dish with layers of flavor.\nhttps://royal-kitchens.co/hyderabadi-biryani-masterclass' },
   {
     title: 'Aloo Gobi',
-    description: 'Simple and delicious stir-fried potatoes with cauliflower and aromatic spices.',
+    description: 'Simple and delicious stir-fried potatoes with cauliflower and aromatic spices.\nhttps://quick-meals.pro/aloo-gobi-easy-vegetable-curry',
     image: 'https://www.allrecipes.com/thmb/lVUDh4PrStKg55Ro0-umadES-Kc=/750x0/filters:no_upscale():max_bytes(150000):strip_icc()/4469167-aloo-gobi-masala-cauliflower-and-potato-curry-Allrecipes-Magazine-4x3-1-d8ab6614b61f4787a9c262ec6a867df3.jpg'
   }
 ]
 
 const dessertPins = [
-  { title: 'Chocolate Lava Cake', description: 'Decadent warm chocolate cake with a molten center, perfect for chocolate lovers.' },
-  { title: 'Gulab Jamun', description: 'Sweet milk solids dumplings soaked in rose-flavored sugar syrup, an Indian classic.' },
-  { title: 'Raspberry Cheesecake', description: 'Creamy cheesecake with tart raspberry layer, a modern dessert favorite.' },
-  { title: 'Tiramisu', description: 'Italian no-bake dessert with layers of mascarpone cream and espresso-soaked ladyfingers.' },
-  { title: 'Mango Kulfi', description: 'Frozen Indian ice cream with mango pulp and traditional flavors, served as bars.' },
-  { title: 'Pistachio Baklava', description: 'Crispy phyllo pastry layered with pistachios and honey, a Middle Eastern treat.' }
+  { title: 'Chocolate Lava Cake', description: 'Decadent warm chocolate cake with a molten center, perfect for chocolate lovers.\nhttps://dessert-lab.com/chocolate-lava-molten-center-recipe' },
+  { title: 'Gulab Jamun', description: 'Sweet milk solids dumplings soaked in rose-flavored sugar syrup, an Indian classic.\nhttps://sweet-traditions.io/gulab-jamun-preparation-guide' },
+  { title: 'Raspberry Cheesecake', description: 'Creamy cheesecake with tart raspberry layer, a modern dessert favorite.\nhttps://baker-blog.net/raspberry-cheesecake-no-bake-version' },
+  { title: 'Tiramisu', description: 'Italian no-bake dessert with layers of mascarpone cream and espresso-soaked ladyfingers.\nhttps://italian-cooking.org/tiramisu-authentic-dessert-steps' },
+  { title: 'Mango Kulfi', description: 'Frozen Indian ice cream with mango pulp and traditional flavors, served as bars.\nhttps://frozen-treats.in/mango-kulfi-homemade-ice-cream' },
+  { title: 'Pistachio Baklava', description: 'Crispy phyllo pastry layered with pistachios and honey, a Middle Eastern treat.\nhttps://middle-east-kitchen.com/baklava-pastry-phyllo-technique' }
 ]
 
 const classicalPins = [
   {
     title: 'Pride and Prejudice — Jane Austen',
-    description: 'A witty romantic novel exploring love, class, and personal growth in Georgian England.',
+    description: 'A witty romantic novel exploring love, class, and personal growth in Georgian England.\nhttps://literature.edu/pride-prejudice-jane-austen-analysis',
     image: 'https://m.media-amazon.com/images/I/71f5FjkTnkL._AC_UL320_.jpg'
   },
-  { title: 'Meditations — Marcus Aurelius', description: 'Philosophical meditations on virtue, resilience, and living a meaningful life.' },
+  { title: 'Meditations — Marcus Aurelius', description: 'Philosophical meditations on virtue, resilience, and living a meaningful life.\nhttps://philosophy-archive.org/meditations-marcus-aurelius' },
   {
     title: 'The Odyssey — Homer',
-    description: 'An epic journey of Odysseus trying to return home after the Trojan War, timeless adventure.',
+    description: 'An epic journey of Odysseus trying to return home after the Trojan War, timeless adventure.\nhttps://classics.org/the-odyssey-homer-study-guide',
     image: 'https://m.media-amazon.com/images/I/71LEtbDQyvL._AC_UL320_.jpg'
   },
   {
     title: 'Crime and Punishment — Fyodor Dostoevsky',
-    description: 'A psychological thriller about guilt and redemption in 19th century Russia.',
+    description: 'A psychological thriller about guilt and redemption in 19th century Russia.\nhttps://classic-lit.io/crime-punishment-dostoevsky-deep-read',
     image: 'https://m.media-amazon.com/images/I/71O2XIytdqL._AC_UL320_.jpg'
   },
   {
     title: 'The Divine Comedy — Dante Alighieri',
-    description: 'A poetic journey through Hell, Purgatory, and Paradise, exploring divine justice.',
+    description: 'A poetic journey through Hell, Purgatory, and Paradise, exploring divine justice.\nhttps://medieval-literature.net/divine-comedy-dante-guide',
     image: 'https://m.media-amazon.com/images/I/91nRZwNtK2L._AC_UL320_.jpg'
   },
-  { title: 'Jane Eyre — Charlotte Brontë', description: 'A gothic romance following an orphan girl\'s struggles and triumph against adversity.' }
+  { title: 'Jane Eyre — Charlotte Brontë', description: 'A gothic romance following an orphan girl\\nhttps://victorian-novels.com/jane-eyre-charlotte-bronte\'s struggles and triumph against adversity.' }
 ]
 
 const fantasyPins = [
-  { title: 'The Name of the Wind — Patrick Rothfuss', description: 'The origin story of Kvothe, a legendary figure, told through his own captivating recollections.' },
-  { title: 'The Hobbit — J.R.R. Tolkien', description: 'A short but adventure-filled journey of Bilbo Baggins discovering courage and treasure.' },
-  { title: 'The Lies of Locke Lamora — Scott Lynch', description: 'A witty con-artist tale with intricate plotting and unforgettable characters in a fantasy Venice.' },
-  { title: 'A Wizard of Earthsea — Ursula K. Le Guin', description: 'A coming-of-age wizard story about balance between magic and responsibility, beautifully written.' },
-  { title: 'The Blade Itself — Joe Abercrombie', description: 'A gritty, character-driven epic with morally complex protagonists and brutal battles.' },
-  { title: 'Mistborn — Brandon Sanderson', description: 'An intricate fantasy world with unique magic systems and multiple interconnected narratives.' }
+  { title: 'The Name of the Wind — Patrick Rothfuss', description: 'The origin story of Kvothe, a legendary figure, told through his own captivating recollections.\nhttps://fantasy-world.io/name-of-the-wind-rothfuss-guide' },
+  { title: 'The Hobbit — J.R.R. Tolkien', description: 'A short but adventure-filled journey of Bilbo Baggins discovering courage and treasure.\nhttps://middle-earth.org/the-hobbit-tolkien-adventure' },
+  { title: 'The Lies of Locke Lamora — Scott Lynch', description: 'A witty con-artist tale with intricate plotting and unforgettable characters in a fantasy Venice.\nhttps://fantasy-heist.com/locke-lamora-scott-lynch' },
+  { title: 'A Wizard of Earthsea — Ursula K. Le Guin', description: 'A coming-of-age wizard story about balance between magic and responsibility, beautifully written.\nhttps://wizard-tales.edu/earthsea-ursula-le-guin' },
+  { title: 'The Blade Itself — Joe Abercrombie', description: 'A gritty, character-driven epic with morally complex protagonists and brutal battles.\nhttps://grimdark-fantasy.net/blade-itself-abercrombie' },
+  { title: 'Mistborn — Brandon Sanderson', description: 'An intricate fantasy world with unique magic systems and multiple interconnected narratives.\nhttps://magic-systems.io/mistborn-sanderson-worldbuilding' }
 ]
 
 const workoutPins = [
-  { title: 'Full Body HIIT (30 mins)', description: 'High-intensity interval training combining cardio and strength for maximum efficiency.' },
-  { title: 'Upper Body Strength (45 mins)', description: 'Focused strength work for chest, back, shoulders, and arms with progressive overload.' },
-  { title: 'Yoga Flow (30 mins)', description: 'Mindful flowing sequences building flexibility, balance, and inner calm.' },
-  { title: 'Core Blast (20 mins)', description: 'Targeted core exercises to build strength in abs, obliques, and lower back.' },
-  { title: 'Sprint Intervals (25 mins)', description: 'Speed and endurance building through short, intense running intervals with rest periods.' },
-  { title: 'Leg Day Circuit (40 mins)', description: 'Comprehensive leg workout targeting quads, hamstrings, glutes, and calves.' }
+  { title: 'Full Body HIIT (30 mins)', description: 'High-intensity interval training combining cardio and strength for maximum efficiency.\nhttps://fitness-hub.pro/hiit-workout-30-mins-guide' },
+  { title: 'Upper Body Strength (45 mins)', description: 'Focused strength work for chest, back, shoulders, and arms with progressive overload.\nhttps://strength-training.net/upper-body-45-mins-routine' },
+  { title: 'Yoga Flow (30 mins)', description: 'Mindful flowing sequences building flexibility, balance, and inner calm.\nhttps://yoga-daily.com/yoga-flow-30-mins-class' },
+  { title: 'Core Blast (20 mins)', description: 'Targeted core exercises to build strength in abs, obliques, and lower back.\nhttps://abs-guide.io/core-blast-20-mins-workout' },
+  { title: 'Sprint Intervals (25 mins)', description: 'Speed and endurance building through short, intense running intervals with rest periods.\nhttps://running-program.org/sprint-intervals-25-mins' },
+  { title: 'Leg Day Circuit (40 mins)', description: 'Comprehensive leg workout targeting quads, hamstrings, glutes, and calves.\nhttps://leg-day.fitness/circuit-40-mins-training' }
 ]
 
 const decorPins = [
-  { title: 'Boho Living Room Setup', description: 'Create a warm, eclectic space with layered textures, natural materials, and global-inspired decor.' },
-  { title: 'Minimalist Bedroom Ideas', description: 'Design a calm, clutter-free bedroom with neutral colors and essential furniture pieces.' },
-  { title: 'Cozy Reading Nook', description: 'Build the perfect cozy corner with comfortable seating, good lighting, and personal touches.' },
-  { title: 'Indoor Plant Styling', description: 'Elevate your space with greenery, combining pots, stands, and hanging planters artfully.' },
-  { title: 'Gallery Wall Inspiration', description: 'Create visual interest with a curated collection of art, photos, and prints on your walls.' },
-  { title: 'Small Balcony Makeover', description: 'Transform a small outdoor space into a functional and beautiful retreat with smart furnishing.' }
+  { title: 'Boho Living Room Setup', description: 'Create a warm, eclectic space with layered textures, natural materials, and global-inspired decor.\nhttps://home-design.co/boho-living-room-setup-guide' },
+  { title: 'Minimalist Bedroom Ideas', description: 'Design a calm, clutter-free bedroom with neutral colors and essential furniture pieces.\nhttps://bedroom-ideas.net/minimalist-design-essentials' },
+  { title: 'Cozy Reading Nook', description: 'Build the perfect cozy corner with comfortable seating, good lighting, and personal touches.\nhttps://interior-comfort.io/reading-nook-inspiration-diy' },
+  { title: 'Indoor Plant Styling', description: 'Elevate your space with greenery, combining pots, stands, and hanging planters artfully.\nhttps://plant-styling.com/indoor-plant-arrangement-tips' },
+  { title: 'Gallery Wall Inspiration', description: 'Create visual interest with a curated collection of art, photos, and prints on your walls.\nhttps://wall-art.design/gallery-wall-inspiration-guide' },
+  { title: 'Small Balcony Makeover', description: 'Transform a small outdoor space into a functional and beautiful retreat with smart furnishing.\nhttps://patio-design.pro/balcony-makeover-small-spaces' }
 ]
 
 const housePins = [
   {
     title: '245 Oak Ridge Dr.',
-    description: 'Urban living with exposed brick, high ceilings, and open floor plan. Perfect for young professionals.',
+    description: 'Urban living with exposed brick, high ceilings, and open floor plan. Perfect for young professionals.\nhttps://realestate.pro/oak-ridge-loft-property-listing',
     image: 'https://photos.zillowstatic.com/fp/fe609ad06ba7ad18f9fcd06705708924-p_e.webp'
   },
   {
     title: '1847 Maple Ave.',
-    description: 'Spacious family home with 4 bedrooms, good schools nearby, and a beautiful backyard.',
+    description: 'Spacious family home with 4 bedrooms, good schools nearby, and a beautiful backyard.\nhttps://homes.search/maple-ave-suburban-family-home',
     image: 'https://photos.zillowstatic.com/fp/7f87327edacefd5c47496fef617b7863-p_e.webp'
   },
   {
     title: '512 Coastal Highway Ln.',
-    description: 'Stunning ocean views with private beach access, modern amenities, and elegant architecture.',
+    description: 'Stunning ocean views with private beach access, modern amenities, and elegant architecture.\nhttps://luxury-properties.com/coastal-highway-beachfront',
     image: 'https://photos.zillowstatic.com/fp/01ebd9275fda23df49bc61d14a23ca5e-p_e.webp'
   },
   { title: '3925 Mountain View Rd.',
-    description: 'Cozy mountain escape with stone fireplace, deck overlooking forest, and peaceful setting.',
+    description: 'Cozy mountain escape with stone fireplace, deck overlooking forest, and peaceful setting.\nhttps://mountain-homes.io/view-rd-cabin-retreat',
     image: 'https://photos.zillowstatic.com/fp/d2c613e3bfccde1b2c16d4391091c303-p_e.webp'
   },
   { title: '621 Historic District St.',
-    description: 'Charming 1920s building in trendy neighborhood with original details and rooftop terrace.',
+    description: 'Charming 1920s building in trendy neighborhood with original details and rooftop terrace.\nhttps://historic-properties.net/historic-district-brownstone',
     image: 'https://photos.zillowstatic.com/fp/34842cc449afa9cbfead053fa3a91bd2-p_e.webp'
   },
   { title: '784 Innovation Park Way',
-    description: 'Smart home automation, solar panels, energy efficient, with cutting-edge kitchen and tech integration.',
+    description: 'Smart home automation, solar panels, energy efficient, with cutting-edge kitchen and tech integration.\nhttps://tech-homes.co/innovation-park-smart-home',
     image: 'https://photos.zillowstatic.com/fp/5e20a023dba08abf8283a31c4ba6184f-p_e.webp'
   }
 ]
 
 const weddingPins = [
-  { title: 'Luxury Bedding Set', description: 'Egyptian cotton sheets and duvet cover in champagne, perfect for a luxurious bedroom.' },
-  { title: 'Premium Cookware', description: 'Professional-grade stainless steel pots and pans, ideal for couples who love cooking together.' },
-  { title: 'Wine Decanter Set', description: 'Hand-blown crystal decanter with accompanying wine glasses for entertaining guests.' },
-  { title: 'Espresso Machine', description: 'Automatic espresso machine with grinder, perfect for morning coffee rituals at home.' },
-  { title: 'Silk Throw Pillows', description: 'Set of 4 silk throw pillows in neutral tones to enhance living room comfort and style.' },
-  { title: 'Crystal Vase Collection', description: 'Set of 3 hand-crafted crystal vases of varying heights for flower arrangements.' }
+  { title: 'Luxury Bedding Set', description: 'Egyptian cotton sheets and duvet cover in champagne, perfect for a luxurious bedroom.\nhttps://luxury-bedding.com/sheets-champagne-collection' },
+  { title: 'Premium Cookware', description: 'Professional-grade stainless steel pots and pans, ideal for couples who love cooking together.\nhttps://cookware-shop.io/premium-cooking-set-review' },
+  { title: 'Wine Decanter Set', description: 'Hand-blown crystal decanter with accompanying wine glasses for entertaining guests.\nhttps://wine-accessories.pro/decanter-set-guide' },
+  { title: 'Espresso Machine', description: 'Automatic espresso machine with grinder, perfect for morning coffee rituals at home.\nhttps://coffee-gear.net/espresso-machine-home-barista' },
+  { title: 'Silk Throw Pillows', description: 'Set of 4 silk throw pillows in neutral tones to enhance living room comfort and style.\nhttps://home-textiles.com/silk-pillows-neutral-tones' },
+  { title: 'Crystal Vase Collection', description: 'Set of 3 hand-crafted crystal vases of varying heights for flower arrangements.\nhttps://vase-gallery.art/crystal-vase-arrangement' }
 ]
 
 const travelPins = [
-  { title: 'Kyoto, Japan', description: 'Ancient temples, traditional gardens, and geisha culture. Experience traditional Japan at its finest.' },
-  { title: 'Amalfi Coast, Italy', description: 'Colorful cliff villages, stunning coastal views, and incredible local cuisine along dramatic coastline.' },
-  { title: 'Machu Picchu, Peru', description: 'Iconic Incan citadel perched high in the Andes mountains with breathtaking archaeological wonders.' },
-  { title: 'Norwegian Fjords', description: 'Dramatic steep-sided valleys with waterfalls, glaciers, and unforgettable natural landscapes.' },
-  { title: 'Bali, Indonesia', description: 'Tropical paradise with white sand beaches, rice terraces, temples, and vibrant culture.' },
-  { title: 'Iceland - Ring Road', description: 'Epic driving adventure through Iceland visiting glaciers, waterfalls, geysers, and black sand beaches.' }
+  { title: 'Kyoto, Japan', description: 'Ancient temples, traditional gardens, and geisha culture. Experience traditional Japan at its finest.\nhttps://travel-guide.jp/kyoto-japan-temples-geisha' },
+  { title: 'Amalfi Coast, Italy', description: 'Colorful cliff villages, stunning coastal views, and incredible local cuisine along dramatic coastline.\nhttps://amalfi-coast.travel/village-guide-italy' },
+  { title: 'Machu Picchu, Peru', description: 'Iconic Incan citadel perched high in the Andes mountains with breathtaking archaeological wonders.\nhttps://machu-picchu.org/peru-hiking-guide-incan' },
+  { title: 'Norwegian Fjords', description: 'Dramatic steep-sided valleys with waterfalls, glaciers, and unforgettable natural landscapes.\nhttps://fjord-explorer.no/norwegian-landscapes-guide' },
+  { title: 'Bali, Indonesia', description: 'Tropical paradise with white sand beaches, rice terraces, temples, and vibrant culture.\nhttps://bali-island.travel/beaches-temples-culture' },
+  { title: 'Iceland - Ring Road', description: 'Epic driving adventure through Iceland visiting glaciers, waterfalls, geysers, and black sand beaches.\nhttps://iceland-roads.tour/ring-road-complete-guide' }
 ]
 
 const emergencyPins = [
-  { title: '1. Stock up on non-perishables', description: 'Stock up on non-perishable food items like canned goods, dried fruits, and nuts. Non-perishable foods ensure you have sustenance without relying on refrigeration.' },
-  { title: '2. Keep a water supply', description: 'Keep a supply of bottled water for drinking and basic hygiene needs. Adequate water supply is crucial for hydration and sanitation during outages.' },
-  { title: '3. Have flashlights on hand', description: 'Have flashlights and extra batteries readily available in multiple locations. Flashlights provide essential lighting when the power goes out unexpectedly.' },
-  { title: '4. Get a radio', description: 'Use a battery-powered or hand-crank radio to stay informed about weather and news updates. Staying informed helps you make safe decisions during emergencies.' },
-  { title: '5. Keep your devices charged', description: 'Charge all electronic devices beforehand and consider investing in portable power banks. Charged devices allow communication and access to important information.' },
-  { title: '6. Stay warm', description: 'Keep blankets, warm clothing, and sleeping bags accessible to stay warm if heating is unavailable. Warm clothing and blankets help maintain body heat in cold conditions.' }
+  { title: '1. Stock up on non-perishables', description: 'Stock up on non-perishable food items like canned goods, dried fruits, and nuts. Non-perishable foods ensure you have sustenance without relying on refrigeration.\nhttps://emergency-prep.io/power-outage-food-storage' },
+  { title: '2. Keep a water supply', description: 'Keep a supply of bottled water for drinking and basic hygiene needs. Adequate water supply is crucial for hydration and sanitation during outages.\nhttps://survival-guide.net/emergency-water-supplies' },
+  { title: '3. Have flashlights on hand', description: 'Have flashlights and extra batteries readily available in multiple locations. Flashlights provide essential lighting when the power goes out unexpectedly.\nhttps://power-outage.info/flashlight-emergency-kit' },
+  { title: '4. Get a radio', description: 'Use a battery-powered or hand-crank radio to stay informed about weather and news updates. Staying informed helps you make safe decisions during emergencies.\nhttps://emergency-alert.com/radio-communication-guide' },
+  { title: '5. Keep your devices charged', description: 'Charge all electronic devices beforehand and consider investing in portable power banks. Charged devices allow communication and access to important information.\nhttps://power-banks.tech/device-charging-outages' },
+  { title: '6. Stay warm', description: 'Keep blankets, warm clothing, and sleeping bags accessible to stay warm if heating is unavailable. Warm clothing and blankets help maintain body heat in cold conditions.\nhttps://cold-weather.tips/staying-warm-emergency-situations' }
 ]
 
 const makePinsFromArray = (

@@ -21,3 +21,9 @@
 <script setup lang="ts">
 import Header from './components/Header.vue'
 </script>
+
+<style>
+  a {
+    @apply text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium;
+  }
+</style>

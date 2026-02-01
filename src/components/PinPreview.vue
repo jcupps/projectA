@@ -77,7 +77,8 @@
               :style="{ 'view-transition-name': `pin-title-${pin.id}` }"
             >{{ pin.title }}</h3>
             <div class="text-sm text-slate-500 dark:text-slate-300 flex items-center justify-between">
-              <span>{{ pin.description }}</span>
+              <!-- NOTE: This is not secure. MUST secure for production version. -->
+              <span class="whitespace-pre" v-html="description"></span>
             </div>
           </div>
           <button
@@ -137,7 +138,7 @@
 <script setup lang="ts">
 import type { Pin } from '../data/mockPins'
 import config from '../config';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const { pin, style = 'detailed' } = defineProps<{ pin: Pin, style?: 'truncated' | 'detailed' }>()
 const isExpanded = ref(false);
@@ -145,6 +146,15 @@ const isExpanded = ref(false);
 const emit = defineEmits<{
   (e: 'expand', pinId: number): void;
 }>();
+
+const description = computed(() => {
+  // Detect URLs and replace with hyperlinks
+  if (!pin.description) return '';
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return pin.description.replace(urlRegex, (url) => {
+    return `<a href="${url}">${url}</a>`;
+  });
+});
 
 function collapse() {
   if (!isExpanded.value) return;
