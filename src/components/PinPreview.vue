@@ -8,7 +8,7 @@
       ]"
     >
     <div
-      :class="['relative bg-cover bg-center', style === 'truncated' ? 'h-12' : 'h-16']"
+      :class="['relative bg-cover bg-center', style === 'truncated' ? 'h-12' : 'h-[4.5rem]']"
       :style="config.pinImageStyle === 'background' ? { backgroundImage: `url(${pin.image})` } : {}"
       role="img"
       :aria-label="pin.title"
@@ -19,9 +19,9 @@
         class="absolute inset-0 bg-white/60 dark:bg-black/60"
       ></div>
 
-      <div class="relative flex gap-4 items-center ps-5 pe-1 py-2 h-full">
+      <div :class="['relative flex gap-4 items-center ps-5 py-2 h-full', style === 'detailed' ? 'pe-2' : 'pe-5']">
         <div class="flex-1 min-w-0 h-full">
-          <div :class="['flex flex-col gap-1 h-full', style === 'detailed' ? 'justify-end' : 'justify-center']">
+          <div class="flex flex-col gap-2 h-full justify-center">
             <h3 class="font-semibold text-slate-800 dark:text-slate-100 truncate"
               :style="{ 'view-transition-name': `pin-title-${pin.id}` }"
             >{{ pin.title }}</h3>
@@ -44,7 +44,7 @@
           v-if="config.pinImageStyle !== 'background' && pin.image"
           :src="pin.image"
           :alt="pin.title"
-          class="h-full object-cover rounded w-20"
+          :class="['h-full object-cover rounded', style === 'detailed' ? 'w-24' : 'w-16']"
           :style="{ 'view-transition-name': `pin-img-${pin.id}` }"
         />
         <div v-if="style === 'detailed'" class="flex gap-2 h-full">
@@ -53,10 +53,10 @@
             <span><font-awesome-icon icon="fa-regular fa-comment" /> {{ pin.comments?.length ?? 0 }}</span>
           </div> -->
           <button
-            class="w-10 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all h-full"
+            class="w-6 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all h-full"
             @click.stop.prevent="expand"
           >
-            <font-awesome-icon icon="fa-solid fa-chevron-down" class="text-slate-600 dark:text-slate-300 text-xs" />
+            <font-awesome-icon icon="fa-solid fa-chevron-down" class="2text-slate-600 dark:text-slate-400" />
           </button>
         </div>
       </div>
@@ -70,7 +70,7 @@
       role="img"
       :aria-label="pin.title"
     >
-      <div class="relative flex flex-col gap-4 ps-5 pe-1 py-4">
+      <div class="relative flex flex-col gap-4 ps-5 pe-2 py-4">
         <div class="flex flex-1 gap-3 min-w-0 justify-between">
           <div class="flex flex-col gap-1">
             <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100"
@@ -82,9 +82,9 @@
           </div>
           <button
             @click.stop.prevent="collapse"
-            class="w-10 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all h-full shrink-0"
+            class="w-6 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all h-full shrink-0"
           >
-            <font-awesome-icon icon="fa-solid fa-chevron-down" class="text-slate-600 dark:text-slate-300 text-xs rotate-180" />
+            <font-awesome-icon icon="fa-solid fa-chevron-down" class="text-slate-600 dark:text-slate-400 rotate-180" />
           </button>
         </div>
         <img

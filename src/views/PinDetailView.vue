@@ -7,7 +7,9 @@
           :to="{ name: 'BoardDetail', params: { id: boardId } }"
           class="flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
         >
-          <span class="text-2xl">←</span>
+          <span class="text-xl">
+            <font-awesome-icon icon="fa-solid fa-arrow-left" />
+          </span>
           {{  board?.title }}
         </router-link>
       </div>

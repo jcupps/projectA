@@ -5,7 +5,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import icons and add them to the Library */
 import { faBookmark, faComment, faHeart } from '@fortawesome/free-regular-svg-icons'
-import { faChevronDown, faEllipsisVertical, faShareNodes } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faChevronDown, faEllipsisVertical, faShareNodes } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import './styles/tailwind.css'
 import router from './router'
@@ -26,7 +26,7 @@ try {
 // register service worker helper provided by vite-plugin-pwa
 import { registerSW } from 'virtual:pwa-register'
 
-library.add(faBookmark, faChevronDown, faComment, faEllipsisVertical, faHeart, faShareNodes)
+library.add(faArrowLeft, faBookmark, faChevronDown, faComment, faEllipsisVertical, faHeart, faShareNodes)
 
 createApp(App)
   .use(router)
