@@ -2,7 +2,7 @@
   <div class="min-h-screen">
     <!-- Header with Back Button -->
     <div class="sticky top-0 z-40">
-      <div class="pt-3 flex items-center justify-between">
+      <div class="flex items-center justify-between">
         <router-link
           :to="{ name: 'BoardDetail', params: { id: boardId } }"
           class="flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"

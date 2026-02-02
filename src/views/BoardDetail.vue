@@ -1,5 +1,5 @@
 <template>
-  <section class="py-6">
+  <section>
     <Board :board :style="{ 'view-transition-name': `board-${board.id}` }" />
   </section>
 </template>

@@ -80,23 +80,23 @@
       </div>
     </div>
 
+    <!-- Author -->
+    <div class="flex items-center gap-2 mb-4">
+      <div class="w-5 h-5 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold">
+        {{ board.author.charAt(0) }}
+      </div>
+      <div>
+        <div class="font-semibold text-slate-700 dark:text-slate-300">{{ board.author }}</div>
+      </div>
+    </div>
+
     <div
       ref="swipeTarget"
     >
-      <!-- Author -->
-      <div class="flex items-center gap-4 mb-6">
-        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xl font-semibold">
-          {{ board.author.charAt(0) }}
-        </div>
-        <div>
-          <div class="font-semibold text-lg text-slate-700 dark:text-slate-300">{{ board.author }}</div>
-        </div>
-      </div>
-
       <div class="flex gap-4 items-baseline justify-between">
         <div>
           <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">{{ board.title }}</h2>
-          <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">{{ board.description }}</p>
+          <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">{{ board.description }}</p>
         </div>
         <button>
           <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class="text-slate-600 dark:text-slate-300 text-lg" />

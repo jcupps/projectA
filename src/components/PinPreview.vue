@@ -78,7 +78,7 @@
             >{{ pin.title }}</h3>
             <div class="text-sm text-slate-500 dark:text-slate-300 flex items-center justify-between">
               <!-- NOTE: This is not secure. MUST secure for production version. -->
-              <span class="whitespace-pre" v-html="description"></span>
+              <span class="whitespace-pre-line" v-html="description"></span>
             </div>
           </div>
           <button
@@ -96,7 +96,7 @@
           :style="{ 'view-transition-name': `pin-img-${pin.id}` }"
         />
 
-        <div class="flex gap-8 mb-6 text-slate-500 dark:text-slate-400">
+        <div class="flex gap-8 text-slate-500 dark:text-slate-400">
           <button
             @click="() => {}"
             class="flex items-center gap-2 group hover:text-red-500 transition-colors"
@@ -152,7 +152,7 @@ const description = computed(() => {
   if (!pin.description) return '';
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   return pin.description.replace(urlRegex, (url) => {
-    return `<a href="${url}">${url}</a>`;
+    return `<a href="${url}" class="block mt-2">${url}</a>`;
   });
 });
 
