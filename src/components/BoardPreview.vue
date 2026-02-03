@@ -1,5 +1,5 @@
 <template>
-  <section class="relative bg-slate-200/50 dark:bg-slate-800/50 border border-slate-700
+  <section class="relative bg-slate-200/50 dark:bg-slate-800/50 border-2 border-sky-300/30
     rounded-lg shadow-md dark:shadow-gray-950/80 overflow-hidden cursor-pointer">
     <div class="p-4">
       <div class="flex gap-4 items-baseline justify-between">
@@ -14,7 +14,7 @@
       </div>
 
       <div
-        class="flex flex-col gap-0.5 text-slate-800 dark:text-slate-100"
+        class="flex flex-col gap-0.5 text-slate-800 dark:text-slate-100 text-sm"
         :style="maskStyle"
       >
         <PinCard

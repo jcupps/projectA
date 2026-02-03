@@ -2,13 +2,14 @@
   <article
     v-if="!isExpanded"
       :class="[
-        'rounded-2xl overflow-hidden shadow-sm bg-slate-200 dark:bg-slate-800',
-        'border-2 border-sky-300/30 transition-colors',
-        style === 'detailed' ? 'hover:bg-slate-300 dark:hover:bg-slate-700' : ''
+        'overflow-hidden shadow-sm bg-slate-200 dark:bg-slate-800 transition-colors',
+        style === 'detailed'
+          ? 'rounded-2xl border-2 border-sky-300/30 hover:bg-slate-300 dark:hover:bg-slate-700'
+          : 'rounded-xl border border-slate-700'
       ]"
     >
     <div
-      :class="['relative bg-cover bg-center', style === 'truncated' ? 'h-12' : 'h-[4.5rem]']"
+      :class="['relative bg-cover bg-center', style === 'truncated' ? 'h-10' : 'h-[4.5rem]']"
       :style="config.pinImageStyle === 'background' ? { backgroundImage: `url(${pin.image})` } : {}"
       role="img"
       :aria-label="pin.title"
@@ -19,7 +20,7 @@
         class="absolute inset-0 bg-white/60 dark:bg-black/60"
       ></div>
 
-      <div :class="['relative flex gap-4 items-center ps-5 py-2 h-full', style === 'detailed' ? 'pe-2' : 'pe-5']">
+      <div :class="['relative flex gap-4 items-center ps-5 h-full', style === 'detailed' ? 'pe-2 py-2' : 'pe-5 py-1']">
         <div class="flex-1 min-w-0 h-full">
           <div class="flex flex-col gap-2 h-full justify-center">
             <h3 class="font-semibold text-slate-800 dark:text-slate-100 truncate"
@@ -44,7 +45,7 @@
           v-if="config.pinImageStyle !== 'background' && pin.image"
           :src="pin.image"
           :alt="pin.title"
-          :class="['h-full object-cover rounded', style === 'detailed' ? 'w-24' : 'w-16']"
+          :class="['h-full object-cover rounded', style === 'detailed' ? 'w-24' : 'w-12']"
           :style="{ 'view-transition-name': `pin-img-${pin.id}` }"
         />
         <div v-if="style === 'detailed'" class="flex gap-2 h-full">
