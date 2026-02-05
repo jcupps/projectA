@@ -1,44 +1,68 @@
 <template>
-  <section class="relative bg-slate-200/50 dark:bg-slate-800/50 border-2 border-sky-300/30
-    rounded-lg shadow-md dark:shadow-gray-950/80 overflow-hidden cursor-pointer">
-    <div class="p-4">
-      <div class="flex gap-4 items-baseline justify-between">
-        <div>
-          <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">{{ board.title }}</h2>
-          <p class="text-sm text-slate-500 dark:text-slate-300 mb-3">{{ board.description }}</p>
+  <section :class="[
+    'relative bg-slate-200/50 dark:bg-slate-800/50 border-2 border-sky-300/30',
+    'rounded-lg shadow-md dark:shadow-gray-950/80 overflow-hidden cursor-pointer',
+    'flex flex-col',
+    !showSamplePins ? 'h-72' : ''
+  ]">
+    <div class="flex gap-4 items-baseline justify-between p-4">
+      <div>
+        <!-- Author -->
+        <div class="flex items-center gap-2 mb-2 text-sm">
+          <div class="w-5 h-5 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center
+            text-white font-semibold">
+            {{ board.author.charAt(0) }}
+          </div>
+          <div>
+            <div class="font-semibold text-slate-700 dark:text-slate-300">{{ board.author }}</div>
+          </div>
         </div>
-        <div class="flex-col gap-1 text-xs text-slate-500 dark:text-slate-300 flex items-start justify-between w-14">
-          <span class=" text-red-400"><font-awesome-icon icon="fa-regular fa-heart" /> {{ board.likes }}</span>
-          <span><font-awesome-icon icon="fa-regular fa-comment" /> {{ board.comments?.length ?? 0 }}</span>
-        </div>
-      </div>
 
-      <div
-        class="flex flex-col gap-0.5 text-slate-800 dark:text-slate-100 text-sm"
-        :style="maskStyle"
-      >
-        <PinCard
-          v-for="pin in visiblePins"
-          :key="pin.id"
-          :pin="pin"
-          :style="'truncated'"1px solid darkblue
-        />
-         <!-- <div
-          v-for="pin in visiblePins"
-          :key="pin.id"
-          class="flex gap-3 justify-between items-center bg-slate-700/50 h-10 px-2 py-1 border border-slate-200 dark:border-slate-700 rounded"
-        >
-          <div class="text-sm truncate">{{ pin.title }}</div>
-          <img
-            v-if="pin.image"
-            :src="pin.image"
-            :alt="pin.title"
-            class="h-full object-cover rounded"
-          />
-        </div> -->
+        <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">{{ board.title }}</h2>
+        <!-- <p class="text-sm text-slate-500 dark:text-slate-300">{{ board.description }}</p> -->
       </div>
-      <div v-if="moreCount > 0" class="relative z-20 mt-1 text-center text-sm text-slate-600 dark:text-slate-300">
-        +{{ moreCount }} more
+      <div class="flex-col gap-1 text-xs text-slate-500 dark:text-slate-300 flex items-start justify-between w-12">
+        <span class=" text-red-400"><font-awesome-icon icon="fa-regular fa-heart" /> {{ board.likes }}</span>
+        <span><font-awesome-icon icon="fa-regular fa-comment" /> {{ board.comments?.length ?? 0 }}</span>
+      </div>
+    </div>
+
+    <div
+      class="bg-cover bg-center h-full"
+      :style="{
+        ...maskStyle,
+        'background-image': `url('${visiblePins.find(pin => !!pin.image)?.image}')`
+      }"
+    >
+      <!-- <PinCard
+        v-for="pin in visiblePins"
+        :key="pin.id"
+        :pin="pin"
+        :style="'truncated'"1px solid darkblue
+      /> -->
+      <div v-if="showSamplePins" class="p-4 flex flex-col gap-1 text-slate-800 dark:text-slate-100 text-sm">
+        <div
+          v-for="pin in visiblePins"
+          :key="pin.id"
+          class="py-2 px-4 rounded-lg bg-slate-900/80 backdrop-blur-[3px] border border-slate-600 truncate font-semibold"
+          style="text-shadow: 0 0 5px black;"
+        >
+          {{ pin.title }}
+        </div>
+        <div
+          v-if="moreCount > 0"
+          class="py-2 px-4 rounded-lg bg-slate-900/80 backdrop-blur-[3px] border border-slate-600 text-center"
+        >
+          +{{ moreCount }} more
+        </div>
+      </div>
+      <div
+        v-else
+        class="flex flex-col gap-1 text-slate-800 dark:text-slate-100 text-sm justify-end h-full"
+      >
+        <div class="p-4 bg-slate-900/80 text-center content-center backdrop-blur-[2px] font-semibold">
+          {{ visiblePins.length }} Items
+        </div>
       </div>
     </div>
   </section>
@@ -53,10 +77,14 @@ const props = defineProps<{
   clipTo?: number
 }>()
 
+const showSamplePins = false;
+
 const visiblePins = computed(() => props.clipTo ? props.board.pins.slice(0, props.clipTo) : props.board.pins)
 const moreCount = computed(() => Math.max(0, props.board.pins.length - visiblePins.value.length))
 
 const maskStyle = computed(() => {
+  return {}; // Temporary disable mask
+
   if (moreCount.value <= 0) return {}
   return {
     WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 75%, transparent 100%)',
