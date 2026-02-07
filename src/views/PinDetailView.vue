@@ -44,10 +44,10 @@
             />
           </div>
 
-          <div class="whitespace-pre text-slate-900 dark:text-slate-100 mb-8">{{ pin.body }}</div>
+          <div class="whitespace-pre-line text-slate-900 dark:text-slate-100 mb-8" v-html="body"></div>
 
           <!-- Action Buttons -->
-          <div class="flex gap-8 mb-6 text-slate-500 dark:text-slate-400">
+          <div class="flex gap-4 mb-6 text-slate-500 dark:text-slate-400">
             <button
               @click="handleLike"
               class="flex items-center gap-2 group hover:text-red-500 transition-colors"
@@ -180,6 +180,15 @@ const sortedComments = computed(() => {
     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   )
 })
+
+const body = computed(() => {
+  // Detect URLs and replace with hyperlinks
+  if (!pin.value?.body) return '';
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return pin.value.body.replace(urlRegex, (url) => {
+    return `<a href="${url}" class="block mt-2">${url}</a>`;
+  });
+});
 
 const addComment = () => {
   if (!newComment.value.trim() || !board.value) return

@@ -74,12 +74,12 @@
       <div class="relative flex flex-col gap-4 ps-5 pe-2 py-4">
         <div class="flex flex-1 gap-3 min-w-0 justify-between">
           <div class="flex flex-col gap-1">
-            <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100"
+            <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100 leading-6"
               :style="{ 'view-transition-name': `pin-title-${pin.id}` }"
             >{{ pin.title }}</h3>
             <div class="text-sm text-slate-500 dark:text-slate-300 flex items-center justify-between">
               <!-- NOTE: This is not secure. MUST secure for production version. -->
-              <span class="whitespace-pre-line" v-html="description"></span>
+              <span class="whitespace-pre-line" style="word-break: break-word;">{{ pin.description }}</span>
             </div>
           </div>
           <button
@@ -89,13 +89,26 @@
             <font-awesome-icon icon="fa-solid fa-chevron-down" class="text-slate-600 dark:text-slate-400 rotate-180" />
           </button>
         </div>
-        <img
-          v-if="config.pinImageStyle !== 'background' && pin.image"
-          :src="pin.image"
-          :alt="pin.title"
-          class="w-full h-auto object-cover rounded"
-          :style="{ 'view-transition-name': `pin-img-${pin.id}` }"
-        />
+        <div v-if="pin.image" class="relative">
+          <img
+            v-if="config.pinImageStyle !== 'background'"
+            :src="pin.image"
+            :alt="pin.title"
+            class="w-full h-auto object-cover rounded"
+            :style="{ 'view-transition-name': `pin-img-${pin.id}` }"
+            @click="onImgClick"
+          />
+          <div
+            v-if="firstLink"
+            class="p-2 bg-gray-900/70 rounded-lg absolute text-xs bottom-2 left-2 text-white backdrop-blur-sm"
+          >
+            <font-awesome-icon icon="fa-solid fa-link" />
+            {{ firstLink.hostname.replace('www.', '') }}
+          </div>
+        </div>
+        <a v-else-if="firstLink" :href="firstLink?.toString()" target="_blank" class="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors">
+          {{ firstLink?.hostname.replace('www.', '') }}
+        </a>
 
         <div class="flex gap-8 text-slate-500 dark:text-slate-400">
           <button
@@ -148,13 +161,9 @@ const emit = defineEmits<{
   (e: 'expand', pinId: number): void;
 }>();
 
-const description = computed(() => {
-  // Detect URLs and replace with hyperlinks
-  if (!pin.description) return '';
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
-  return pin.description.replace(urlRegex, (url) => {
-    return `<a href="${url}" class="block mt-2">${url}</a>`;
-  });
+const firstLink = computed(() => {
+  const match = pin.body?.match(/(https?:\/\/[^\s]+)/g)?.[0];
+  return match ? new URL(match) : null;
 });
 
 function collapse() {
@@ -173,6 +182,10 @@ function expand() {
   });
 
   emit('expand', pin.id);
+}
+
+function onImgClick() {
+  if (firstLink.value) window.open(firstLink.value.toString(), '_blank');
 }
 
 defineExpose({
