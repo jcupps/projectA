@@ -1,14 +1,5 @@
 <template>
   <section class="relative rounded-lg shadow-sm overflow-hidden">
-    <!-- Floating Action Button -->
-    <button
-      @click="showNewPinForm = true"
-      class="fixed bottom-8 right-8 w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center text-2xl z-40"
-      aria-label="Add new pin"
-    >
-      +
-    </button>
-
     <!-- New Pin Modal -->
     <div v-if="showNewPinForm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-md w-full">
@@ -103,18 +94,18 @@
         </button>
       </div>
 
-      <div class="flex gap-8 mb-6 text-slate-500 dark:text-slate-400">
+      <div class="flex gap-4 justify-between mb-6 text-slate-500 dark:text-slate-400">
         <button
           @click="() => {}"
-          class="flex items-center gap-2 group hover:text-red-500 transition-colors"
+          class="flex items-center gap-2 group text-red-400 hover:text-red-500 transition-colors"
         >
           <span class="w-9 h-9 rounded-full group-hover:bg-red-500/10 flex items-center justify-center text-lg transition-colors">
             <font-awesome-icon icon="fa-regular fa-heart" />
           </span>
-          <span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-red-500">{{ board.likes }}</span>
+          <span class="text-sm group-hover:text-red-500">{{ board.likes }}</span>
         </button>
         <button
-          @click="() => {}"
+          @click="tab = 'comments'"
           class="flex items-center gap-2 group hover:text-blue-500 transition-colors"
         >
           <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">
@@ -134,6 +125,14 @@
         >
           <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-lg transition-colors">
             <font-awesome-icon icon="fa-solid fa-share-nodes" />
+          </span>
+        </button>
+        <button
+          class="flex items-center gap-2 group text-blue-500 transition-colors"
+          @click="showNewPinForm = true"
+        >
+          <span class="w-9 h-9 rounded-full group-hover:bg-blue-500/10 flex items-center justify-center text-2xl transition-colors">
+            <font-awesome-icon icon="fa-solid fa-circle-plus" />
           </span>
         </button>
       </div>
@@ -214,6 +213,15 @@
           'opacity-100 translate-x-0': slideDirection === 'none'
         }"
       >
+        <button
+          class="text-sm flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
+          @click="tab = 'pins'"
+        >
+          <span class="text-base">
+            <font-awesome-icon icon="fa-solid fa-arrow-left" />
+          </span>
+          Back
+        </button>
         <div class="bg-slate-100 dark:bg-slate-700 rounded-lg p-4">
           <h3 class="font-semibold text-slate-800 dark:text-slate-100 mb-3 text-sm">Add a Comment</h3>
           <textarea 

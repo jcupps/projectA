@@ -3,7 +3,7 @@
     'relative bg-slate-200/50 dark:bg-slate-800/50 border-2 border-sky-300/30',
     'rounded-lg shadow-md dark:shadow-gray-950/80 overflow-hidden cursor-pointer',
     'flex flex-col',
-    !showSamplePins ? 'h-72' : ''
+    !showSamplePins ? 'h-80' : ''
   ]">
     <div class="flex gap-4 items-baseline justify-between p-4">
       <div>
@@ -60,7 +60,7 @@
         v-else
         class="flex flex-col gap-1 text-slate-800 dark:text-slate-100 text-sm justify-end h-full"
       >
-        <div class="p-4 bg-slate-900/80 text-center content-center backdrop-blur-[2px] font-semibold">
+        <div class="p-4 bg-slate-900/60 text-center content-center backdrop-blur-[2px] font-semibold">
           {{ visiblePins.length }} Items
         </div>
       </div>
