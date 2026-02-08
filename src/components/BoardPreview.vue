@@ -1,6 +1,6 @@
 <template>
   <section :class="[
-    'relative bg-slate-200/50 dark:bg-slate-800/50 border-2 border-sky-300/30',
+    'relative bg-slate-200 dark:bg-slate-800 border-2 border-sky-300/30 hover:bg-slate-300 dark:hover:bg-slate-700',
     'rounded-lg shadow-md dark:shadow-gray-950/80 overflow-hidden cursor-pointer',
     'flex flex-col',
     !showSamplePins ? 'h-80' : ''

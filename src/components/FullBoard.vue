@@ -137,28 +137,9 @@
         </button>
       </div>
 
-      <!-- <div class="flex text-white items-center divide-x-2 divide-slate-600 mb-6 bg-slate-900 rounded-md overflow-hidden">
-        <button
-          v-for="button in ([
-            { tab: 'pins', icon: '𝄙', label: `${board.pins.length}` },
-            { tab: 'members', icon: '👥', label: `${board.sharedWith?.length ?? 0}` },
-            { tab: 'comments', icon: '💬', label: `${board.comments.length}` },
-          ] as Array<{ tab: Tab; icon: string; label: string }>)"
-          :key="button.tab"
-          type="button"
-          aria-label="Items"
-          :class="[
-            'flex-1 py-2 px-4 hover:bg-slate-700/50 transition-colors font-medium flex items-end justify-center gap-2 text-sm',
-            tab === button.tab ? 'bg-slate-700' : ''
-          ]"
-          @click="tab = button.tab"
-        >
-          <span class="text-base">{{ button.icon }}</span>
-          <span>{{ button.label }}</span>
-        </button>
-      </div> -->
-
-      <div
+      <transition-group
+        name="pin-list"
+        tag="div"
         class="flex flex-col gap-1 transition-all duration-300 transform"
         :class="{
           'opacity-0 translate-x-full': slideDirection === 'left',
@@ -166,16 +147,35 @@
           'opacity-100 translate-x-0': slideDirection === 'none'
         }"
         v-if="tab === 'pins'"
+        :style="dragging ? { touchAction: 'none', userSelect: 'none' } : {}"
       >
-        <router-link
-          v-for="pin in board.pins"
+        <div
+          v-for="(pin, idx) in board.pins"
           :key="pin.id"
-          :to="{ name: 'PinDetail', params: { boardId: board.id, pinId: pin.id } }"
-          class="transition-transform hover:scale-102 block"
+          class="transition-transform block relative"
+          :data-index="idx"
+          :class="{ 'opacity-70 scale-101': dragPinId === pin.id }"
+          @pointerdown="(e) => onPointerDown(e, pin, idx)"
+          @pointerup="onPointerUp"
+          @pointercancel="onPointerUp"
         >
-          <PinCard :pin="pin" @expand="onPinExpand" ref="pinRef" />
-        </router-link>
-      </div>
+          <template v-if="dragging && dragFromIndex === idx">
+            <div class="h-16 md:h-20 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+              Dragging...
+            </div>
+          </template>
+
+          <template v-else-if="dragging && placeholderIndex === idx">
+            <div class="h-16 md:h-20 rounded-lg border-2 border-dashed border-blue-400/60 bg-blue-50/40 flex items-center justify-center text-blue-600 font-medium">
+              Drop here
+            </div>
+          </template>
+
+          <template v-else>
+            <PinCard :pin="pin" @expand="onPinExpand" ref="pinRef" @click="onPinClick(pin)" />
+          </template>
+        </div>
+      </transition-group>
       <div 
         v-else-if="tab === 'members'" 
         class="space-y-4 transition-all duration-300 transform"
@@ -270,6 +270,7 @@
 
 <script setup lang="ts">
 import { ref, computed, useTemplateRef } from 'vue'
+import { useRouter } from 'vue-router'
 import { until, useSwipe, useTimeout } from '@vueuse/core'
 import type { Board as BoardType, Comment } from '../data/mockBoards'
 import type { Pin } from '../data/mockPins'
@@ -378,6 +379,77 @@ const formatDate = (date: Date) => {
 
 const pinRefs = useTemplateRef('pinRef');
 
+// Drag / reorder state
+const router = useRouter()
+const dragging = ref(false)
+const dragPinId = ref<number | null>(null)
+const dragFromIndex = ref<number | null>(null)
+const placeholderIndex = ref<number | null>(null)
+let longPressTimer: number | null = null
+
+function onPinClick(pin: Pin) {
+  if (dragging.value) return
+  router.push({ name: 'PinDetail', params: { boardId: props.board.id, pinId: pin.id } })
+}
+
+function onPointerDown(e: PointerEvent, pin: Pin, idx: number) {
+  (e.target as Element)?.setPointerCapture?.(e.pointerId)
+  dragFromIndex.value = idx
+  placeholderIndex.value = idx
+
+  const startDrag = () => {
+    dragging.value = true
+    dragPinId.value = pin.id
+    window.addEventListener('pointermove', onPointerMove)
+    window.addEventListener('pointerup', onPointerUp)
+  }
+
+  // Use a long-press for all pointer types so short clicks still trigger navigation.
+  if (longPressTimer) clearTimeout(longPressTimer)
+  longPressTimer = window.setTimeout(() => {
+    startDrag()
+    longPressTimer = null
+  }, 220)
+}
+
+function onPointerMove(e: PointerEvent) {
+  if (!dragFromIndex.value && dragFromIndex.value !== 0) return
+  if (!dragging.value) return
+
+  const elements = document.elementsFromPoint(e.clientX, e.clientY)
+  const target = elements.find(el => (el as HTMLElement).dataset && (el as HTMLElement).dataset.index !== undefined) as HTMLElement | undefined
+  if (!target) return
+
+  const targetIndex = parseInt(target.dataset.index || '-1')
+  if (isNaN(targetIndex)) return
+
+  if (placeholderIndex.value === targetIndex) return
+  placeholderIndex.value = targetIndex
+}
+
+function onPointerUp(e?: PointerEvent) {
+  if (longPressTimer) {
+    clearTimeout(longPressTimer)
+    longPressTimer = null
+  }
+  window.removeEventListener('pointermove', onPointerMove)
+  window.removeEventListener('pointerup', onPointerUp)
+
+  if (dragging.value && dragFromIndex.value != null && placeholderIndex.value != null) {
+    const from = dragFromIndex.value
+    const to = placeholderIndex.value
+    if (from !== to) {
+      const [moved] = props.board.pins.splice(from, 1)
+      props.board.pins.splice(to, 0, moved)
+    }
+  }
+
+  dragging.value = false
+  dragPinId.value = null
+  dragFromIndex.value = null
+  placeholderIndex.value = null
+}
+
 function onPinExpand(pinId: number) {
   pinRefs.value?.forEach((pinComp) => {
     if (pinComp == null) { return; }
@@ -388,3 +460,24 @@ function onPinExpand(pinId: number) {
   });
 }
 </script>
+
+<style scoped>
+/* animate list reordering using FLIP via transition-group move class */
+.pin-list-move {
+  transition: transform 180ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* slightly smooth element changes */
+.transition-transform {
+  transition: transform 180ms cubic-bezier(.2,.8,.2,1), opacity 120ms ease;
+}
+
+/* visual hint for dragged item */
+.opacity-70 {
+  opacity: .7;
+}
+
+.scale-101 {
+  transform: scale(1.01);
+}
+</style>
